@@ -1,15 +1,18 @@
-// components/Registration.js
-import axios from "axios";
+// components/auth/Registration.js
+import { useRegisterMutation } from "@/store/authApi"; // Updated import
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+import OTPVerification from "./OptVerification";
 
 const Registration = () => {
 	const [loading, setLoading] = useState(false);
 	const [otpSent, setOtpSent] = useState(false);
 	const [countdown, setCountdown] = useState(59);
+	const [userData, setUserData] = useState();
+	const [register] = useRegisterMutation();
 
 	const validationSchema = Yup.object().shape({
 		name: Yup.string().required("Name is required"),
@@ -34,11 +37,11 @@ const Registration = () => {
 				formDataToSend.append(key, values[key]);
 			});
 
-			const response = await axios.post("/api/register", formDataToSend);
+			const response = await register(formDataToSend).unwrap();
 
-			if (response.data.success) {
+			if (response.user) {
 				setOtpSent(true);
-				startCountdown();
+				setUserData(response.user);
 				toast.success(
 					"OTP sent to your email. Please verify your email."
 				);
@@ -53,17 +56,10 @@ const Registration = () => {
 		}
 	};
 
-	const startCountdown = () => {
-		const interval = setInterval(() => {
-			setCountdown((prev) => {
-				if (prev === 1) {
-					clearInterval(interval);
-					return 59;
-				}
-				return prev - 1;
-			});
-		}, 1000);
-	};
+	if (otpSent && userData) {
+		// Show OTP Verification form after successful registration
+		return <OTPVerification userData={userData} />;
+	}
 
 	return (
 		<div className="md:w-[500px] mx-auto bg-white p-8 border border-gray-300 rounded-lg shadow-md">
@@ -90,7 +86,9 @@ const Registration = () => {
 							/>
 						</div>
 						<div>
-							<label className="block text-gray-700">Email:</label>
+							<label className="block text-gray-700">
+								Email:
+							</label>
 							<Field
 								name="email"
 								type="email"
@@ -118,7 +116,9 @@ const Registration = () => {
 							/>
 						</div>
 						<div>
-							<label className="block text-gray-700">Photo:</label>
+							<label className="block text-gray-700">
+								Photo:
+							</label>
 							<input
 								name="photo"
 								type="file"
@@ -145,29 +145,19 @@ const Registration = () => {
 							className="btn-primary">
 							{loading ? "Registering..." : "Register"}
 						</button>
-
-						{otpSent && (
-							<div className="mt-4 text-center text-gray-700">
-								<p>
-									Verification code sent to your email. You
-									can request a new OTP in {countdown}{" "}
-									seconds.
-								</p>
-							</div>
-						)}
 					</Form>
 				)}
 			</Formik>
-			<div className="mt-4 text-center ">
-					<p className="text-gray-700">
-						Already have an account?{" "}
-						<Link
-							href={"/"}
-							className="text-gray-500 hover:underline focus:outline-none">
-							Login
-						</Link>
-					</p>
-				</div>
+			<div className="mt-4 text-center">
+				<p className="text-gray-700">
+					Already have an account?{" "}
+					<Link
+						href={"/auth/login"}
+						className="text-gray-500 hover:underline focus:outline-none">
+						Login
+					</Link>
+				</p>
+			</div>
 		</div>
 	);
 };

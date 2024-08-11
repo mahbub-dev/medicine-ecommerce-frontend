@@ -7,11 +7,18 @@ const Index = () => {
 		<>
 			<Head>
 				<title>Register - My Medicine Store</title>
-				<meta name="description" content="Create a new account at My Medicine Store to manage your orders, products, and more. Join us today!" />
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<meta
+					name="description"
+					content="Create a new account at My Medicine Store to manage your orders, products, and more. Join us today!"
+				/>
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1"
+				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<main className={`flex min-h-screen items-center justify-center p-4 ${inter.className}`}>
+			<main
+				className={`flex min-h-screen items-center justify-center p-4 ${inter.className}`}>
 				<Registration />
 			</main>
 		</>
