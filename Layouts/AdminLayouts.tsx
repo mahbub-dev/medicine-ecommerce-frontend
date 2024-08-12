@@ -1,9 +1,11 @@
 import Sidebar from "@/components/admin/sidebar";
 import { useRouter } from "next/router";
 
+import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+const inter = Inter({ subsets: ["latin"] });
 const DashboardLayout = ({ children }: any) => {
 	const [isSidebarOpen, setSidebarOpen] = useState(false);
 	const router = useRouter();
@@ -22,12 +24,12 @@ const DashboardLayout = ({ children }: any) => {
 	return (
 		<>
 			{/* <Navbar /> */}
-			<div className="flex min-h-screen bg-gray-100 ">
+			<div className="flex  h-screen  bg-gray-100  ">
 				<Sidebar />
-				<div className="flex-1 flex w-full flex-col">
-					<main className="flex-1  overflow-y-auto p-8 bg-gray-50">
-						{children}
-					</main>
+				<div
+					className={`flex-1 flex w-full flex-col ${inter.className}`}
+					style={{ overflow: "hidden" }}>
+					<main style={{overflowY:'auto'}} className="flex-1 p-8 bg-gray-50">{children}</main>
 				</div>
 			</div>
 		</>

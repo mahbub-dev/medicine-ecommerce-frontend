@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['localhost', 'another-example.com'], // Replace with your actual domains
+    domains: ['localhost', ''], // Replace with your actual domains
   },
 };
 
