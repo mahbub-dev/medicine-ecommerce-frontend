@@ -47,7 +47,43 @@ export const authApi = createApi({
 				},
 			}),
 		}),
+
+		// Mutation for login
+		login: builder.mutation<
+			{
+				accessToken: string;
+				refreshToken: string;
+				user: any;
+			},
+			{ email: string; password: string }
+		>({
+			query: (credentials) => ({
+				url: "login",
+				method: "POST",
+				body: credentials,
+			}),
+		}),
+
+		// Mutation for logout
+		logout: builder.mutation<
+			{
+				message: string;
+			},
+			{}
+		>({
+			query: ({ refreshToken }: any) => ({
+				url: "logout",
+				method: "POST",
+				body: { refreshToken },
+			}),
+		}),
 	}),
 });
 
-export const { useRegisterMutation, useVerifyOtpMutation,useResendOtpMutation } = authApi;
+export const {
+	useRegisterMutation,
+	useVerifyOtpMutation,
+	useResendOtpMutation,
+	useLoginMutation,
+	useLogoutMutation,
+} = authApi;

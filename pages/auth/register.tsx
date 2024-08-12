@@ -1,4 +1,5 @@
 import Registration from "@/components/auth/Registration";
+import AuthLayout from "@/Layouts/AuthLayout";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 const inter = Inter({ subsets: ["latin"] });
@@ -17,10 +18,12 @@ const Index = () => {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<main
-				className={`flex min-h-screen items-center justify-center p-4 ${inter.className}`}>
-				<Registration />
-			</main>
+			<AuthLayout>
+				<main
+					className={`flex min-h-screen items-center justify-center p-4 ${inter.className}`}>
+					<Registration />
+				</main>
+			</AuthLayout>
 		</>
 	);
 };

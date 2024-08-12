@@ -1,4 +1,5 @@
 import Login from "@/components/auth/Login";
+import AuthLayout from "@/Layouts/AuthLayout";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 
@@ -19,10 +20,12 @@ export default function Index() {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<main
-				className={`flex min-h-screen items-center justify-center p-4 ${inter.className}`}>
-				<Login />
-			</main>
+			<AuthLayout>
+				<main
+					className={`flex min-h-screen items-center justify-center p-4 ${inter.className}`}>
+					<Login />
+				</main>
+			</AuthLayout>
 		</>
 	);
 }

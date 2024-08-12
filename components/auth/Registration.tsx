@@ -10,9 +10,9 @@ import OTPVerification from "./OptVerification";
 const Registration = () => {
 	const [loading, setLoading] = useState(false);
 	const [otpSent, setOtpSent] = useState(false);
-	const [countdown, setCountdown] = useState(59);
 	const [userData, setUserData] = useState();
 	const [register] = useRegisterMutation();
+
 
 	const validationSchema = Yup.object().shape({
 		name: Yup.string().required("Name is required"),

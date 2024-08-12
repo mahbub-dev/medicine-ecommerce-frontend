@@ -1,13 +1,24 @@
 import Sidebar from "@/components/admin/sidebar";
-import { useState } from "react";
+import { useRouter } from "next/router";
+
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const DashboardLayout = ({ children }: any) => {
 	const [isSidebarOpen, setSidebarOpen] = useState(false);
-
-	const toggleSidebar = () => {
-		setSidebarOpen(!isSidebarOpen);
-	};
-
+	const router = useRouter();
+	const user = useSelector((state: any) => state.auth.user);
+	useEffect(() => {
+		if (user?.role !== "admin") {
+			router.push("/auth/login");
+		}
+	}, [router, user?.role]);
+	// const toggleSidebar = () => {
+	// 	setSidebarOpen(!isSidebarOpen);
+	// };
+	if (user?.role !== "admin") {
+		return <></>;
+	}
 	return (
 		<>
 			{/* <Navbar /> */}

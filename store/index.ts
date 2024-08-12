@@ -3,9 +3,11 @@ import { combineReducers } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import { authApi } from "./authApi";
+import authReducer from "./authSlice"; // Import the authSlice
 import { userApi } from "./userApi";
 
 const rootReducer = combineReducers({
+	auth: authReducer, // Add the authSlice here
 	[userApi.reducerPath]: userApi.reducer,
 	[authApi.reducerPath]: authApi.reducer,
 	// Add other reducers here
@@ -14,7 +16,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
 	key: "root",
 	storage,
-	whitelist: [userApi.reducerPath, authApi.reducerPath], // Specify which reducers you want to persist
+	whitelist: ["auth", userApi.reducerPath, authApi.reducerPath], // Include auth in the whitelist
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
