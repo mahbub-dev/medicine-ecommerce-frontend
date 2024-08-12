@@ -1,34 +1,25 @@
+import GlobalPagination from "@/components/common/Pagination";
+import usePagination from "@/hooks/usePagination";
 import { useGetUsersQuery } from "@/store/userApi";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 const UsersList = () => {
-	const [page, setPage] = useState(1);
-	const limit = 10; // Number of users per page
+	const { page, router } = usePagination();
 	const { data, error, isLoading, refetch } = useGetUsersQuery({
 		page,
-		limit,
+		limit: 10,
 	});
-	const handleNextPage = () => {
-		if (data && page * limit < data.total) {
-			setPage(page + 1);
-		}
-	};
-	const handlePreviousPage = () => {
-		if (page > 1) {
-			setPage(page - 1);
-		}
-	};
 
 	useEffect(() => {
 		refetch();
 	}, [refetch]);
-	
+
 	if (isLoading) return <div className="text-center">Loading...</div>;
-	if (error) return <div className="text-center">Error loading users.</div>;
+	if (error) return <div className="text-center">No Data Found</div>;
 	// if (error) return <div>Error loading users.</div>;
 
 	// Use real data if available; otherwise, fallback to dummy data
 	const users = data?.users.length ? data.users : [];
-console.log(users)
+
 	return (
 		<div className="container mx-auto p-6">
 			{/* <h2 className="text-3xl font-bold mb-6 text-gray-800">User List</h2> */}
@@ -67,32 +58,11 @@ console.log(users)
 					</tbody>
 				</table>
 			</div>
-			<div className="flex justify-between items-center mt-6">
-				<button
-					onClick={handlePreviousPage}
-					disabled={page === 1}
-					className={`px-4 py-2 rounded-md ${
-						page === 1
-							? "bg-gray-300 cursor-not-allowed"
-							: "bg-gray-800 text-white hover:bg-gray-700"
-					}`}>
-					Previous
-				</button>
-				<span className="text-gray-600">
-					Page {page} of{" "}
-					{Math.ceil((data?.total || [].length) / limit)}
-				</span>
-				<button
-					onClick={handleNextPage}
-					disabled={page * limit >= (data?.total || [0].length)}
-					className={`px-4 py-2 rounded-md ${
-						page * limit >= (data?.total || [0].length)
-							? "bg-gray-300 cursor-not-allowed"
-							: "bg-gray-800 text-white hover:bg-gray-700"
-					}`}>
-					Next
-				</button>
-			</div>
+			<GlobalPagination
+				// total={totalData}
+				totalPages={data?.totalPages as number}
+				onPageChange={(newPage) => {}}
+			/>
 		</div>
 	);
 };

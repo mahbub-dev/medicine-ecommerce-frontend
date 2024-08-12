@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import Modal from "@/components/common/GlobalModal";
+import usePagination from "@/hooks/usePagination";
 import {
 	useGetCategoryByIdQuery,
 	useGetSubCategoriesByIdQuery,
 } from "@/store/categories/categoryApi";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import CategoryForm from "./categoryForm";
 import CategoryList from "./categoryLIst";
@@ -15,14 +15,7 @@ interface CategoryDetailsProps {
 
 const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id }) => {
 	const { data: category, isLoading, error } = useGetCategoryByIdQuery(id);
-	const router = useRouter();
-	const [page, setPage] = useState(1);
-	// Update page state when the router query changes
-	useEffect(() => {
-		if (router.query.page) {
-			setPage(parseInt(router.query.page as string) || 1);
-		}
-	}, [router.query.page]);
+	const { page, router } = usePagination();
 	const {
 		data,
 		refetch,

@@ -16,7 +16,7 @@ export const userApi = createApi({
 	baseQuery: baseQueryWithReauth, // Adjust the base URL as needed
 	endpoints: (builder) => ({
 		getUsers: builder.query<
-			{ users: IUser[]; total: number },
+			{ users: IUser[]; total: number; totalPages: number },
 			{ page: number; limit: number }
 		>({
 			query: ({ page, limit }) => `users?page=${page}&limit=${limit}`,
