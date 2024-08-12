@@ -4,7 +4,8 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import { authApi } from "./authApi";
 import authReducer from "./authSlice"; // Import the authSlice
-import { categoryApi } from "./categories/categoryApi";
+import { categoryApi } from "./categoryApi";
+import { productApi } from "./productApi";
 import { userApi } from "./userApi";
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
 	[userApi.reducerPath]: userApi.reducer,
 	[authApi.reducerPath]: authApi.reducer,
 	[categoryApi.reducerPath]: categoryApi.reducer,
+	[productApi.reducerPath]: productApi.reducer,
 	// Add other reducers here
 });
 
@@ -23,6 +25,7 @@ const persistConfig = {
 		userApi.reducerPath,
 		authApi.reducerPath,
 		categoryApi.reducerPath,
+		productApi.reducerPath
 	], // Include auth in the whitelist
 };
 
@@ -36,7 +39,8 @@ export const store = configureStore({
 		}).concat(
 			userApi.middleware,
 			authApi.middleware,
-			categoryApi.middleware
+			categoryApi.middleware,
+			productApi.middleware
 		), // Include both userApi and authApi middlewares
 });
 

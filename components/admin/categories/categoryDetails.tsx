@@ -4,7 +4,7 @@ import usePagination from "@/hooks/usePagination";
 import {
 	useGetCategoryByIdQuery,
 	useGetSubCategoriesByIdQuery,
-} from "@/store/categories/categoryApi";
+} from "@/store/categoryApi";
 import React, { useEffect, useState } from "react";
 import CategoryForm from "./categoryForm";
 import CategoryList from "./categoryLIst";

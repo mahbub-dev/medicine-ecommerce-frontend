@@ -1,4 +1,4 @@
-import { useGetCategoriesQuery } from "@/store/categories/categoryApi";
+import { useGetCategoriesQuery } from "@/store/categoryApi";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import CategoryForm from "./categoryForm";
