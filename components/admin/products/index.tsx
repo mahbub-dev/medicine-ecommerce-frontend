@@ -1,8 +1,11 @@
-import CategoryList from "@/components/admin/categories/categoryLIst"; // Example category list component
 import ProductForm from "@/components/admin/products/ProductForm"; // Ensure the correct path
 import ProductList from "@/components/admin/products/ProductList"; // Example product list component
+import Modal from "@/components/common/GlobalModal";
+import { Inter } from "next/font/google";
 import React, { useState } from "react";
+import VariantForm from "./VariantForm";
 
+const inter = Inter({ subsets: ["latin"] });
 const ProductManager: React.FC = () => {
 	const [selectedProduct, setSelectedProduct] = useState(null);
 	const [showProductForm, setShowProductForm] = useState(false);
@@ -31,8 +34,21 @@ const ProductManager: React.FC = () => {
 	};
 
 	return (
-		<div className="container mx-auto p-4">
+		<div className={`container mx-auto p-4 ${inter.className}`}>
 			<h1 className="text-4xl font-bold mb-8">Product Management</h1>
+			{/* Button to toggle Add Product Form */}
+			<button
+				className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+				onClick={() => setShowProductForm(!showProductForm)}>
+				{showProductForm ? "Cancel" : "Add Product"}
+			</button>
+
+			{/* Button to toggle Add Variant Form */}
+			<button
+				className="mt-4 ml-4 px-4 py-2 bg-green-500 text-white rounded"
+				onClick={() => setShowVariantForm(!showVariantForm)}>
+				{showVariantForm ? "Cancel" : "Add Variant"}
+			</button>
 
 			{/* Product List Component */}
 			<ProductList
@@ -47,40 +63,17 @@ const ProductManager: React.FC = () => {
 			/>
 
 			{/* Show Product Form if toggled */}
-			{showProductForm && (
+			<Modal
+				isOpen={showProductForm}
+				onClose={() => setShowProductForm(false)}>
 				<ProductForm
 					initialData={selectedProduct}
 					onSubmit={handleProductFormSubmit}
 					categories={[]} // Pass categories list
 					variants={[]} // Pass variants list
 				/>
-			)}
-
-			{/* Variant List Component - could be inside ProductForm */}
-			{/* <VariantForm onSubmit={handleVariantFormSubmit} /> */}
-
-			{/* You can also include the Category List here if needed */}
-			<CategoryList
-				categories={[]}
-				refetch={function (): void {
-					throw new Error("Function not implemented.");
-				}}
-				totalPages={0}
-			/>
-
-			{/* Button to toggle Add Product Form */}
-			<button
-				className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-				onClick={() => setShowProductForm(!showProductForm)}>
-				{showProductForm ? "Cancel" : "Add Product"}
-			</button>
-
-			{/* Button to toggle Add Variant Form */}
-			<button
-				className="mt-4 ml-4 px-4 py-2 bg-green-500 text-white rounded"
-				onClick={() => setShowVariantForm(!showVariantForm)}>
-				{showVariantForm ? "Cancel" : "Add Variant"}
-			</button>
+			</Modal>
+			<VariantForm onSubmit={handleVariantFormSubmit} />
 		</div>
 	);
 };

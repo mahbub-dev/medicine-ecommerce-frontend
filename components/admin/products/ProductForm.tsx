@@ -1,14 +1,14 @@
 import {
-    useCreateProductMutation,
-    useUpdateProductMutation,
+	useCreateProductMutation,
+	useUpdateProductMutation,
 } from "@/store/productApi"; // Replace with your product API slice
-import { ErrorMessage, Field, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { Category } from "../categories/types";
+import CategoryHierarchySelect from "./categorySelect";
 import { IProduct, Variant } from "./types"; // Import necessary types
-
 interface ProductFormProps {
 	initialData?: any; // Replace `any` with the correct product type
 	onSubmit?: () => void;
@@ -20,21 +20,17 @@ const validationSchema = Yup.object({
 	name: Yup.string().required("Name is required"),
 	slug: Yup.string().required("Slug is required"),
 	description: Yup.string().required("Description is required"),
+	metaKey: Yup.string().required("Meta Key is required"),
 	price: Yup.number().required("Price is required"),
 	discount: Yup.number(),
 	stockStatus: Yup.boolean(),
 	status: Yup.string()
 		.oneOf(["active", "inactive"])
 		.required("Status is required"),
-	category: Yup.string().required("Category is required"),
+	// category: Yup.string().required("Category is required"),
 });
 
-const ProductForm: React.FC<ProductFormProps> = ({
-	initialData,
-	onSubmit,
-	categories,
-	variants,
-}) => {
+const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
 	const [selectedVariants, setSelectedVariants] = useState<string[]>([]);
 	const [photos, setPhotos] = useState<File[]>([]);
 
@@ -50,9 +46,10 @@ const ProductForm: React.FC<ProductFormProps> = ({
 		discount: initialData?.discount || 0,
 		stockStatus: initialData?.stockStatus || true,
 		status: initialData?.status || "active",
-		category: initialData?.category || "",
+		category: initialData?.category || [],
 		variants: initialData?.variants || [],
 	};
+
 	useEffect(() => {
 		if (initialData?.variants) {
 			setSelectedVariants(initialData.variants);
@@ -104,112 +101,201 @@ const ProductForm: React.FC<ProductFormProps> = ({
 			toast.error(error.data?.message || "Something went wrong");
 		}
 	};
+
 	return (
 		<Formik
 			initialValues={initialValues}
 			validationSchema={validationSchema}
 			onSubmit={handleSubmit}>
 			{({ setFieldValue }) => (
-				<form
-					className="bg-white p-6 shadow-lg rounded-lg"
-					onSubmit={Formik}>
+				<Form className="bg-white p-6  rounded-lg">
 					<h2 className="text-2xl font-bold mb-4">
 						{initialData ? "Edit Product" : "Add Product"}
 					</h2>
 
-					<div className="mb-4">
-						<label className="block text-gray-700">Name</label>
-						<Field
-							name="name"
-							type="text"
-							className="w-full px-4 py-2 border rounded-md focus:outline-none"
-						/>
-						<ErrorMessage
-							name="name"
-							component="div"
-							className="text-red-500"
-						/>
-					</div>
-
-					<div className="mb-4">
-						<label className="block text-gray-700">Slug</label>
-						<Field
-							name="slug"
-							type="text"
-							className="w-full px-4 py-2 border rounded-md focus:outline-none"
-						/>
-						<ErrorMessage
-							name="slug"
-							component="div"
-							className="text-red-500"
-						/>
-					</div>
-
-					<div className="mb-4">
-						<label className="block text-gray-700">
-							Description
-						</label>
-						<Field
-							name="description"
-							as="textarea"
-							className="w-full px-4 py-2 border rounded-md focus:outline-none"
-						/>
-						<ErrorMessage
-							name="description"
-							component="div"
-							className="text-red-500"
-						/>
-					</div>
-
-					<div className="mb-4">
-						<label className="block text-gray-700">Photos</label>
-						<input
-							type="file"
-							multiple
-							onChange={handlePhotosChange}
-							className="w-full px-4 py-2 border rounded-md focus:outline-none"
-						/>
-					</div>
-
-					<div className="mb-4">
-						<label className="block text-gray-700">Category</label>
-						<Field
-							as="select"
-							name="category"
-							className="w-full px-4 py-2 border rounded-md focus:outline-none">
-							<option value="">Select Category</option>
-							{categories.map((category) => (
-								<option key={category._id} value={category._id}>
-									{category.name}
-								</option>
-							))}
-						</Field>
-						<ErrorMessage
-							name="category"
-							component="div"
-							className="text-red-500"
-						/>
-					</div>
-
-					<div className="mb-4">
-						<label className="block text-gray-700">Variants</label>
-						{variants.map((variant) => (
-							<div key={variant._id}>
+					<div className="grid grid-cols-2 gap-5">
+						<div className="">
+							<div className="mb-4">
+								<label className="block text-gray-700">
+									Name
+								</label>
 								<Field
-									type="checkbox"
-									value={variant._id}
-									checked={selectedVariants.includes(
-										variant._id as string
-									)}
-									onChange={() =>
-										handleVariantChange(
-											variant._id as string
-										)
-									}
+									name="name"
+									type="text"
+									className="w-full px-4 py-2 border rounded-md focus:outline-none"
 								/>
-								<label className="ml-2">{variant.name}</label>
+								<ErrorMessage
+									name="name"
+									component="div"
+									className="text-red-500"
+								/>
 							</div>
-						))}
+
+							<div className="mb-4">
+								<label className="block text-gray-700">
+									Slug
+								</label>
+								<Field
+									name="slug"
+									type="text"
+									className="w-full px-4 py-2 border rounded-md focus:outline-none"
+								/>
+								<ErrorMessage
+									name="slug"
+									component="div"
+									className="text-red-500"
+								/>
+							</div>
+
+							<div className="mb-4">
+								<label className="block text-gray-700">
+									Description
+								</label>
+								<Field
+									name="description"
+									as="textarea"
+									className="w-full px-4 py-2 border rounded-md focus:outline-none"
+								/>
+								<ErrorMessage
+									name="description"
+									component="div"
+									className="text-red-500"
+								/>
+							</div>
+
+							<div className="mb-4">
+								<label className="block text-gray-700">
+									Meta Key
+								</label>
+								<Field
+									name="metaKey"
+									type="text"
+									className="w-full px-4 py-2 border rounded-md focus:outline-none"
+								/>
+								<ErrorMessage
+									name="metaKey"
+									component="div"
+									className="text-red-500"
+								/>
+							</div>
+
+							<div className="mb-4">
+								<label className="block text-gray-700">
+									Price
+								</label>
+								<Field
+									name="price"
+									type="number"
+									className="w-full px-4 py-2 border rounded-md focus:outline-none"
+								/>
+								<ErrorMessage
+									name="price"
+									component="div"
+									className="text-red-500"
+								/>
+							</div>
+						</div>
+
+						<div>
+							<div className="mb-4">
+								<label className="block text-gray-700">
+									Discount
+								</label>
+								<Field
+									name="discount"
+									type="number"
+									className="w-full px-4 py-2 border rounded-md focus:outline-none"
+								/>
+								<ErrorMessage
+									name="discount"
+									component="div"
+									className="text-red-500"
+								/>
+							</div>
+							<div className="mb-4">
+								<label className="block text-gray-700">
+									Stock Status
+								</label>
+								<Field
+									name="stockStatus"
+									type="checkbox"
+									className="mr-2"
+								/>
+								<span className="text-gray-700">In Stock</span>
+								<ErrorMessage
+									name="stockStatus"
+									component="div"
+									className="text-red-500"
+								/>
+							</div>
+
+							<div className="mb-4">
+								<label className="block text-gray-700">
+									Status
+								</label>
+								<Field
+									as="select"
+									name="status"
+									className="w-full px-4 py-2 border rounded-md focus:outline-none">
+									<option value="active">Active</option>
+									<option value="inactive">Inactive</option>
+								</Field>
+								<ErrorMessage
+									name="status"
+									component="div"
+									className="text-red-500"
+								/>
+							</div>
+
+							<div className="mb-4">
+								<label className="block text-gray-700">
+									Photos
+								</label>
+								<input
+									type="file"
+									multiple
+									onChange={handlePhotosChange}
+									className="w-full px-4 py-2 border rounded-md focus:outline-none"
+								/>
+							</div>
+
+							<CategoryHierarchySelect
+								setFieldValue={function (
+									categories: any
+								): void {
+									Object.values(categories);
+									setFieldValue(
+										"category",
+										Object.values(categories)
+									);
+								}}
+							/>
+
+							{/* <div className="mb-4">
+								<label className="block text-gray-700">
+									Variants
+								</label>
+								{variants.map((variant) => (
+									<div key={variant._id}>
+										<Field
+											type="checkbox"
+											value={variant._id}
+											checked={selectedVariants.includes(
+												variant._id as string
+											)}
+											onChange={() =>
+												handleVariantChange(
+													variant._id as string
+												)
+											}
+										/>
+										<label className="ml-2">
+											{variant.name}
+										</label>
+									</div>
+								))}
+							</div> */}
+						</div>
 					</div>
 
 					<div className="flex justify-end space-x-4">
@@ -224,7 +310,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
 								: "Add Product"}
 						</button>
 					</div>
-				</form>
+				</Form>
 			)}
 		</Formik>
 	);

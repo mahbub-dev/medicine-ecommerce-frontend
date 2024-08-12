@@ -12,12 +12,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
   return (
     <Portal>
-      <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="fixed inset-0 flex  items-center justify-center z-50">
         {/* Overlay */}
-        <div className="fixed inset-0 bg-black opacity-50" onClick={onClose}></div>
+        <div className="fixed inset-0 bg-black opacity-50 "  onClick={onClose}></div>
         
         {/* Modal Content */}
-        <div className="bg-white rounded-lg shadow-lg p-6 z-10 max-w-lg w-full">
+        <div className="bg-white rounded-lg shadow-lg p-6 z-10  w-[700px]  ">
           <div className="flex justify-end">
             <button
               className="text-gray-600 hover:text-gray-900 focus:outline-none"
