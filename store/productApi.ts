@@ -1,7 +1,6 @@
+import { IProduct } from "@/components/admin/products/types";
 import baseQueryWithReauth from "@/utils/apiRequest";
 import { createApi } from "@reduxjs/toolkit/query/react";
-
-import { IProduct } from "@/components/admin/products/types";
 
 // Define the API
 export const productApi = createApi({
@@ -18,12 +17,13 @@ export const productApi = createApi({
 			}),
 			invalidatesTags: [{ type: "Product", id: "LIST" }],
 		}),
+
 		// Query for getting products with pagination
 		getProducts: builder.query<
 			{
 				products: IProduct[];
 				total: number;
-				page: number;
+				totalPages: number;
 				limit: number;
 			},
 			{ page?: number; limit?: number }
@@ -43,6 +43,7 @@ export const productApi = createApi({
 					  ]
 					: [{ type: "Product", id: "LIST" }],
 		}),
+
 		// Query for getting a single product by ID
 		getProductById: builder.query<IProduct, string>({
 			query: (id) => ({
@@ -50,25 +51,48 @@ export const productApi = createApi({
 			}),
 			providesTags: (result, error, id) => [{ type: "Product", id }],
 		}),
+
 		// Mutation for updating a product
-		updateProduct: builder.mutation<IProduct, Partial<IProduct>>({
-			query: ({ _id, ...rest }) => ({
+		updateProduct: builder.mutation<
+			IProduct,
+			{ _id: string; data: Partial<IProduct> }
+		>({
+			query: ({ _id, data }) => ({
 				url: `/products/${_id}`,
 				method: "PUT",
-				body: rest,
+				body: data,
 			}),
 			invalidatesTags: (result, error, { _id }) => [
 				{ type: "Product", id: _id },
 				{ type: "Product", id: "LIST" },
 			],
 		}),
-		// Mutation for deleting a product
+
+		// Mutation for deleting a product with optimistic update
 		deleteProduct: builder.mutation<{ success: boolean }, string>({
 			query: (id) => ({
 				url: `/products/${id}`,
 				method: "DELETE",
 			}),
 			invalidatesTags: [{ type: "Product", id: "LIST" }],
+			async onQueryStarted(id, { dispatch, queryFulfilled }) {
+				const patchResult = dispatch(
+					productApi.util.updateQueryData(
+						"getProducts",
+						{ page: 1, limit: 10 },
+						(draft) => {
+							draft.products = draft.products.filter(
+								(product) => product._id !== id
+							);
+						}
+					)
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
 		}),
 	}),
 });

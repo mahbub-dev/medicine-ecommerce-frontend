@@ -31,7 +31,8 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 				if (refreshToken) {
 					// Attempt to refresh the token
 					const refreshResult = await axios.post(
-						`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/refresh-token`,{token:refreshToken}
+						`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/refresh-token`,
+						{ token: refreshToken }
 					);
 
 					if (refreshResult.data) {
@@ -53,15 +54,20 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 								return headers;
 							},
 						})(args, api, extraOptions);
-					} else {
-						// Refresh token failed, log out the user
-						store.dispatch(logout());
-						localStorage.removeItem("accessToken");
-						localStorage.removeItem("refreshToken");
-						window.location.href = "/auth/login";
 					}
 				} else {
 					// No refresh token available, log out
+					store.dispatch(logout());
+					localStorage.removeItem("accessToken");
+					localStorage.removeItem("refreshToken");
+					window.location.href = "/auth/login";
+				}
+			} catch (error: any) {
+				if (
+					error?.response?.data?.message === "Invalid refresh token" &&
+					error?.response?.data?.statusCode === 403
+				) {
+					console.error(error)
 					store.dispatch(logout());
 					localStorage.removeItem("accessToken");
 					localStorage.removeItem("refreshToken");

@@ -16,9 +16,9 @@ export interface IProduct {
 	metaKey: string;
 	price: number;
 	discount: number;
-	stockStatus: boolean;
+	inStock: number;
 	status: "active" | "inactive";
-	category: string;
+	categories: string[];
 	variants: any[];
 	createdAt?: Date; // Date when the variant was created
 	updatedAt?: Date; // Date when the variant was last updated

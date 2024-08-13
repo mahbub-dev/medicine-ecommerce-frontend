@@ -10,21 +10,17 @@ const ProductManager: React.FC = () => {
 	const [selectedProduct, setSelectedProduct] = useState(null);
 	const [showProductForm, setShowProductForm] = useState(false);
 	const [showVariantForm, setShowVariantForm] = useState(false);
-	const [selectedCategory, setSelectedCategory] = useState(null);
-
+	const [products, setProducts] = useState<any>({});
 	const handleProductEdit = (product: any) => {
 		setSelectedProduct(product);
 		setShowProductForm(true);
 	};
 
-	const handleVariantEdit = (variant: any) => {
-		// Handle variant edit logic
-		setShowVariantForm(true);
-	};
-
-	const handleProductFormSubmit = () => {
+	const handleProductFormSubmit = (product: any) => {
 		// Refresh product list or handle post-submit logic
 		setShowProductForm(false);
+		setProducts(product);
+		setShowVariantForm(true);
 		setSelectedProduct(null);
 	};
 
@@ -43,23 +39,10 @@ const ProductManager: React.FC = () => {
 				{showProductForm ? "Cancel" : "Add Product"}
 			</button>
 
-			{/* Button to toggle Add Variant Form */}
-			<button
-				className="mt-4 ml-4 px-4 py-2 bg-green-500 text-white rounded"
-				onClick={() => setShowVariantForm(!showVariantForm)}>
-				{showVariantForm ? "Cancel" : "Add Variant"}
-			</button>
-
 			{/* Product List Component */}
 			<ProductList
 				onEdit={handleProductEdit}
-				products={[]}
-				total={0}
-				page={0}
-				limit={0}
-				onPageChange={function (newPage: number): void {
-					throw new Error("Function not implemented.");
-				}}
+				onPageChange={function (newPage: number): void {}}
 			/>
 
 			{/* Show Product Form if toggled */}
@@ -73,7 +56,16 @@ const ProductManager: React.FC = () => {
 					variants={[]} // Pass variants list
 				/>
 			</Modal>
-			<VariantForm onSubmit={handleVariantFormSubmit} />
+
+			<Modal
+				isOpen={showVariantForm}
+				onClose={() => setShowVariantForm(false)}>
+				<VariantForm
+					product={products}
+					onSubmit={handleVariantFormSubmit}
+				/>
+			</Modal>
+			{/* <VariantForm onSubmit={handleVariantFormSubmit} /> */}
 		</div>
 	);
 };

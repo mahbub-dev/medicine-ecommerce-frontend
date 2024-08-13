@@ -11,7 +11,7 @@ import CategoryHierarchySelect from "./categorySelect";
 import { IProduct, Variant } from "./types"; // Import necessary types
 interface ProductFormProps {
 	initialData?: any; // Replace `any` with the correct product type
-	onSubmit?: () => void;
+	onSubmit?: (data: any) => void;
 	categories: Category[];
 	variants: Variant[];
 }
@@ -21,20 +21,21 @@ const validationSchema = Yup.object({
 	slug: Yup.string().required("Slug is required"),
 	description: Yup.string().required("Description is required"),
 	metaKey: Yup.string().required("Meta Key is required"),
-	price: Yup.number().required("Price is required"),
 	discount: Yup.number(),
-	stockStatus: Yup.boolean(),
-	status: Yup.string()
-		.oneOf(["active", "inactive"])
-		.required("Status is required"),
-	// category: Yup.string().required("Category is required"),
+	categories: Yup.array()
+		.min(1, "At least one category is required") // Ensures the array has at least 1 item
+		.required("Category is required"),
+	inStock: Yup.number()
+		.required("Stock is required")
+		.min(1, "Stock must be at least 1"),
+	status: Yup.string().oneOf(["active", "inactive"]),
 });
 
 const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
 	const [selectedVariants, setSelectedVariants] = useState<string[]>([]);
 	const [photos, setPhotos] = useState<File[]>([]);
 
-	const [createProduct, { isLoading }] = useCreateProductMutation();
+	const [createProduct, { isLoading, data }] = useCreateProductMutation();
 	const [updateProduct] = useUpdateProductMutation();
 
 	const initialValues = {
@@ -42,11 +43,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
 		slug: initialData?.slug || "",
 		description: initialData?.description || "",
 		metaKey: initialData?.metaKey || "",
-		price: initialData?.price || 0,
 		discount: initialData?.discount || 0,
-		stockStatus: initialData?.stockStatus || true,
+		inStock: initialData?.inStock || 0,
 		status: initialData?.status || "active",
-		category: initialData?.category || [],
+		categories: initialData?.categories || [],
 		variants: initialData?.variants || [],
 	};
 
@@ -56,14 +56,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
 		}
 	}, [initialData]);
 
-	const handleVariantChange = (variantId: string) => {
-		setSelectedVariants((prev) =>
-			prev.includes(variantId)
-				? prev.filter((id) => id !== variantId)
-				: [...prev, variantId]
-		);
-	};
-
 	const handlePhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files) {
 			setPhotos(Array.from(e.target.files));
@@ -72,7 +64,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
 
 	const handleSubmit = async (
 		values: Partial<IProduct>,
-		{ resetForm }: any
+		{ resetForm, setFieldError }: any
 	) => {
 		try {
 			const formData = new FormData();
@@ -81,197 +73,203 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
 			formData.append("slug", values.slug as string);
 			formData.append("description", values.description as string);
 			formData.append("metaKey", values.metaKey as any);
-			formData.append("price", values.price as any);
 			formData.append("discount", values.discount as any);
-			formData.append("stockStatus", values.stockStatus as any);
+			formData.append("inStock", values.inStock as any);
 			formData.append("status", values.status as string);
-			formData.append("category", values.category as any);
+			formData.append("categories", values.categories as any);
 			formData.append("variants", JSON.stringify(selectedVariants));
-
+			// if (values.categories?.length === 0) {
+			// 	setFieldError("category", "Category is required");
+			// }
 			if (initialData && initialData._id) {
-				await updateProduct({ ...values, photos }).unwrap();
+				await updateProduct({
+					_id: initialData._id,
+					data: values,
+				}).unwrap();
+				if (onSubmit) onSubmit(data);
 			} else {
-				await createProduct(formData).unwrap();
+				const data = await createProduct(formData).unwrap();
+				if (onSubmit) onSubmit(data);
 				toast.success("Product added successfully");
 			}
 
-			if (onSubmit) onSubmit();
 			resetForm();
 		} catch (error: any) {
+			console.log(error);
 			toast.error(error.data?.message || "Something went wrong");
 		}
 	};
 
 	return (
-		<Formik
-			initialValues={initialValues}
-			validationSchema={validationSchema}
-			onSubmit={handleSubmit}>
-			{({ setFieldValue }) => (
-				<Form className="bg-white p-6  rounded-lg">
-					<h2 className="text-2xl font-bold mb-4">
-						{initialData ? "Edit Product" : "Add Product"}
-					</h2>
+		<>
+			<Formik
+				initialValues={initialValues}
+				validationSchema={validationSchema}
+				onSubmit={handleSubmit}>
+				{({ setFieldValue }) => (
+					<Form className="bg-white p-6  rounded-lg">
+						<h2 className="text-2xl font-bold mb-4">
+							{initialData ? "Edit Product" : "Add Product"}
+						</h2>
 
-					<div className="grid grid-cols-2 gap-5">
-						<div className="">
-							<div className="mb-4">
-								<label className="block text-gray-700">
-									Name
-								</label>
-								<Field
-									name="name"
-									type="text"
-									className="w-full px-4 py-2 border rounded-md focus:outline-none"
-								/>
+						<div className="grid grid-cols-2 gap-5">
+							<div className="">
+								<div className="mb-4">
+									<label className="block text-gray-700">
+										Name
+									</label>
+									<Field
+										name="name"
+										type="text"
+										className="w-full px-4 py-2 border rounded-md focus:outline-none"
+									/>
+									<ErrorMessage
+										name="name"
+										component="div"
+										className="text-red-500"
+									/>
+								</div>
+
+								<div className="mb-4">
+									<label className="block text-gray-700">
+										Slug
+									</label>
+									<Field
+										name="slug"
+										type="text"
+										className="w-full px-4 py-2 border rounded-md focus:outline-none"
+									/>
+									<ErrorMessage
+										name="slug"
+										component="div"
+										className="text-red-500"
+									/>
+								</div>
+
+								<div className="mb-4">
+									<label className="block text-gray-700">
+										Description
+									</label>
+									<Field
+										name="description"
+										as="textarea"
+										className="w-full px-4 py-2 border rounded-md focus:outline-none"
+									/>
+									<ErrorMessage
+										name="description"
+										component="div"
+										className="text-red-500"
+									/>
+								</div>
+
+								<div className="mb-4">
+									<label className="block text-gray-700">
+										Meta Key
+									</label>
+									<Field
+										name="metaKey"
+										type="text"
+										className="w-full px-4 py-2 border rounded-md focus:outline-none"
+									/>
+									<ErrorMessage
+										name="metaKey"
+										component="div"
+										className="text-red-500"
+									/>
+								</div>
+							</div>
+
+							<div>
+								<div className="mb-4">
+									<label className="block text-gray-700">
+										Discount
+									</label>
+									<Field
+										name="discount"
+										type="number"
+										className="w-full px-4 py-2 border rounded-md focus:outline-none"
+									/>
+									<ErrorMessage
+										name="discount"
+										component="div"
+										className="text-red-500"
+									/>
+								</div>
+
+								<div className="mb-4">
+									<label className="block text-gray-700">
+										In Stock
+									</label>
+									<Field
+										name="inStock"
+										type="number"
+										className="w-full px-4 py-2 border rounded-md focus:outline-none"
+									/>
+									{/* <span className="text-gray-700">
+										In Stock
+									</span> */}
+									<ErrorMessage
+										name="inStock"
+										component="div"
+										className="text-red-500"
+									/>
+								</div>
+
+								{initialData && (
+									<div className="mb-4">
+										<label className="block text-gray-700">
+											Status
+										</label>
+										<Field
+											as="select"
+											name="status"
+											className="w-full px-4 py-2 border rounded-md focus:outline-none">
+											<option value="active">
+												Active
+											</option>
+											<option value="inactive">
+												Inactive
+											</option>
+										</Field>
+										<ErrorMessage
+											name="status"
+											component="div"
+											className="text-red-500"
+										/>
+									</div>
+								)}
+
+								<div className="mb-4">
+									<label className="block text-gray-700">
+										Photos
+									</label>
+									<input
+										type="file"
+										multiple
+										onChange={handlePhotosChange}
+										className="w-full px-4 py-2 border rounded-md focus:outline-none"
+									/>
+								</div>
+
+								{!initialData && (
+									<CategoryHierarchySelect
+										setFieldValue={function (
+											categories: any
+										): void {
+											Object.values(categories);
+											setFieldValue(
+												"categories",
+												Object.values(categories)
+											);
+										}}
+									/>
+								)}
 								<ErrorMessage
-									name="name"
+									name="category"
 									component="div"
 									className="text-red-500"
 								/>
-							</div>
-
-							<div className="mb-4">
-								<label className="block text-gray-700">
-									Slug
-								</label>
-								<Field
-									name="slug"
-									type="text"
-									className="w-full px-4 py-2 border rounded-md focus:outline-none"
-								/>
-								<ErrorMessage
-									name="slug"
-									component="div"
-									className="text-red-500"
-								/>
-							</div>
-
-							<div className="mb-4">
-								<label className="block text-gray-700">
-									Description
-								</label>
-								<Field
-									name="description"
-									as="textarea"
-									className="w-full px-4 py-2 border rounded-md focus:outline-none"
-								/>
-								<ErrorMessage
-									name="description"
-									component="div"
-									className="text-red-500"
-								/>
-							</div>
-
-							<div className="mb-4">
-								<label className="block text-gray-700">
-									Meta Key
-								</label>
-								<Field
-									name="metaKey"
-									type="text"
-									className="w-full px-4 py-2 border rounded-md focus:outline-none"
-								/>
-								<ErrorMessage
-									name="metaKey"
-									component="div"
-									className="text-red-500"
-								/>
-							</div>
-
-							<div className="mb-4">
-								<label className="block text-gray-700">
-									Price
-								</label>
-								<Field
-									name="price"
-									type="number"
-									className="w-full px-4 py-2 border rounded-md focus:outline-none"
-								/>
-								<ErrorMessage
-									name="price"
-									component="div"
-									className="text-red-500"
-								/>
-							</div>
-						</div>
-
-						<div>
-							<div className="mb-4">
-								<label className="block text-gray-700">
-									Discount
-								</label>
-								<Field
-									name="discount"
-									type="number"
-									className="w-full px-4 py-2 border rounded-md focus:outline-none"
-								/>
-								<ErrorMessage
-									name="discount"
-									component="div"
-									className="text-red-500"
-								/>
-							</div>
-							<div className="mb-4">
-								<label className="block text-gray-700">
-									Stock Status
-								</label>
-								<Field
-									name="stockStatus"
-									type="checkbox"
-									className="mr-2"
-								/>
-								<span className="text-gray-700">In Stock</span>
-								<ErrorMessage
-									name="stockStatus"
-									component="div"
-									className="text-red-500"
-								/>
-							</div>
-
-							<div className="mb-4">
-								<label className="block text-gray-700">
-									Status
-								</label>
-								<Field
-									as="select"
-									name="status"
-									className="w-full px-4 py-2 border rounded-md focus:outline-none">
-									<option value="active">Active</option>
-									<option value="inactive">Inactive</option>
-								</Field>
-								<ErrorMessage
-									name="status"
-									component="div"
-									className="text-red-500"
-								/>
-							</div>
-
-							<div className="mb-4">
-								<label className="block text-gray-700">
-									Photos
-								</label>
-								<input
-									type="file"
-									multiple
-									onChange={handlePhotosChange}
-									className="w-full px-4 py-2 border rounded-md focus:outline-none"
-								/>
-							</div>
-
-							<CategoryHierarchySelect
-								setFieldValue={function (
-									categories: any
-								): void {
-									Object.values(categories);
-									setFieldValue(
-										"category",
-										Object.values(categories)
-									);
-								}}
-							/>
-
-							{/* <div className="mb-4">
+								{/* <div className="mb-4">
 								<label className="block text-gray-700">
 									Variants
 								</label>
@@ -295,24 +293,25 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
 									</div>
 								))}
 							</div> */}
+							</div>
 						</div>
-					</div>
 
-					<div className="flex justify-end space-x-4">
-						<button
-							type="submit"
-							disabled={isLoading}
-							className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-							{isLoading
-								? "Please wait..."
-								: initialData
-								? "Update Product"
-								: "Add Product"}
-						</button>
-					</div>
-				</Form>
-			)}
-		</Formik>
+						<div className="flex justify-end space-x-4">
+							<button
+								type="submit"
+								disabled={isLoading}
+								className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+								{isLoading
+									? "Please wait..."
+									: initialData
+									? "Update Product"
+									: "Add Product"}
+							</button>
+						</div>
+					</Form>
+				)}
+			</Formik>
+		</>
 	);
 };
 

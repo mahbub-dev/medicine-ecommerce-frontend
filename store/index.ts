@@ -7,6 +7,7 @@ import authReducer from "./authSlice"; // Import the authSlice
 import { categoryApi } from "./categoryApi";
 import { productApi } from "./productApi";
 import { userApi } from "./userApi";
+import { variantApi } from "./variantApi";
 
 const rootReducer = combineReducers({
 	auth: authReducer, // Add the authSlice here
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
 	[authApi.reducerPath]: authApi.reducer,
 	[categoryApi.reducerPath]: categoryApi.reducer,
 	[productApi.reducerPath]: productApi.reducer,
+	[variantApi.reducerPath]: variantApi.reducer,
 	// Add other reducers here
 });
 
@@ -25,7 +27,8 @@ const persistConfig = {
 		userApi.reducerPath,
 		authApi.reducerPath,
 		categoryApi.reducerPath,
-		productApi.reducerPath
+		productApi.reducerPath,
+		variantApi.reducerPath,
 	], // Include auth in the whitelist
 };
 
@@ -40,7 +43,8 @@ export const store = configureStore({
 			userApi.middleware,
 			authApi.middleware,
 			categoryApi.middleware,
-			productApi.middleware
+			productApi.middleware,
+			variantApi.middleware
 		), // Include both userApi and authApi middlewares
 });
 
