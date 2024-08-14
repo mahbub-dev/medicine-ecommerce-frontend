@@ -1,0 +1,57 @@
+{
+	"divisions": [
+		{
+			"id": 1,
+			"name": "Dhaka",
+			"districts": [
+				{
+					"id": 1,
+					"name": "Dhaka",
+					"subDistricts": [
+						"Dhaka Sadar",
+						"Keraniganj",
+						"Demra",
+						"Jatrabari"
+					]
+				},
+				{
+					"id": 2,
+					"name": "Gazipur",
+					"subDistricts": [
+						"Gazipur Sadar",
+						"Tongi",
+						"Kaliakoir",
+						"Sreepur"
+					]
+				}
+				
+			]
+		},
+		{
+			"id": 2,
+			"name": "Chattogram",
+			"districts": [
+				{
+					"id": 1,
+					"name": "Chattogram",
+					"subDistricts": [
+						"Chattogram Sadar",
+						"Patiya",
+						"Mirsharai",
+						"Banshkhali"
+					]
+				},
+				{
+					"id": 2,
+					"name": "Cox's Bazar",
+					"subDistricts": [
+						"Cox's Bazar Sadar",
+						"Teknaf",
+						"Ramu",
+						"Ukhiya"
+					]
+				}
+			]
+		}
+	]
+}

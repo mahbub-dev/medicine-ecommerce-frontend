@@ -1,17 +1,17 @@
+import { IProduct, Variant } from "@/components/admin/products/types";
 import baseQueryWithReauth from "@/utils/apiRequest";
 import { createApi } from "@reduxjs/toolkit/query/react";
 export interface Order {
 	_id?: string;
-	customerName: string;
-	date: string;
-	status: "pending" | "shipped" | "delivered" | "canceled";
-	totalAmount: number;
+	user: string;
+	status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
 	items: {
-		productId: string;
-		productName: string;
+		product: IProduct[];
+		variant: Variant;
 		quantity: number;
-		price: number;
 	}[];
+	totalPrice: number;
+	statusUpdates?: { status: string; updatedAt: Date }[]; // Array to track status chan
 }
 
 export const orderApi = createApi({
@@ -42,6 +42,7 @@ export const orderApi = createApi({
 			query: (id) => `/orders/${id}`,
 			providesTags: (result, error, id) => [{ type: "Order", id }],
 		}),
+		
 		createOrder: builder.mutation<Order, Partial<Order>>({
 			query: (order) => ({
 				url: "/orders",
