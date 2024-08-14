@@ -1,11 +1,24 @@
 import usePagination from "@/hooks/usePagination";
+import useOrderFilters from "@/hooks/userFilterHook";
 import { useGetOrdersQuery } from "@/store/orderApi";
 import Link from "next/link";
+import { useEffect } from "react";
 import GlobalPagination from "../common/Pagination";
+import Filter from "../common/orderFilterComponent";
 
 const OrdersPage = () => {
 	const { page } = usePagination();
-	const { data, isLoading, error } = useGetOrdersQuery({ page, limit: 10 });
+	const { startDate, endDate, status } = useOrderFilters();
+	const { data, isLoading, error, refetch } = useGetOrdersQuery({
+		page,
+		limit: 10,
+		startDate ,
+		status,
+		endDate
+	});
+	useEffect(() => {
+		refetch();
+	}, [refetch]);
 
 	if (isLoading) return <p>Loading...</p>;
 	if (error) return <p>Error loading orders.</p>;
@@ -13,6 +26,7 @@ const OrdersPage = () => {
 	return (
 		<div className="container mx-auto p-4">
 			<h1 className="text-2xl font-bold mb-4">Your Orders</h1>
+			<Filter />
 			{data?.orders.length === 0 ? (
 				<p>You have no orders.</p>
 			) : (

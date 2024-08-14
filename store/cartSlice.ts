@@ -63,18 +63,21 @@ const cartSlice = createSlice({
 	initialState,
 	reducers: {
 		addToCart(state, action: PayloadAction<CartItem>) {
-			const existingItem = state.items.find(
+			// Find the index of the item with the same productId but different variantId
+			const existingItemIndex = state.items.findIndex(
 				(item) =>
-					item.productId === action.payload.productId &&
-					item.variantId === action.payload.variantId
+					item.productId === action.payload.productId
 			);
-			if (existingItem) {
-				if (existingItem.quantity < existingItem.maxQuantity) {
-					existingItem.quantity += 1;
-				}
-			} else {
-				state.items.push({ ...action.payload, quantity: 1 });
+		
+			if (existingItemIndex >= 0) {
+				// If there's an existing item with the same productId, remove it
+				state.items.splice(existingItemIndex, 1);
 			}
+		
+			// Add the new item
+			state.items.push({ ...action.payload, quantity: action.payload.quantity });
+		
+			// Recalculate total discount, price, and shipping
 			state.discount = calculateTotalDiscount(state.items);
 			state.totalPrice = calculateTotalPrice(
 				state.items,
@@ -83,9 +86,11 @@ const cartSlice = createSlice({
 			);
 			state.shipping = 5;
 		},
-		removeFromCart(state, action: PayloadAction<CartItem>) {
+		
+		
+		removeFromCart(state, action: PayloadAction<string>) {
 			state.items = state.items.filter(
-				(item) => item.variantId !== action.payload.variantId
+				(item) => item.variantId !== action.payload
 			);
 			state.discount = calculateTotalDiscount(state.items);
 			state.totalPrice = calculateTotalPrice(

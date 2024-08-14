@@ -2,7 +2,7 @@ import { IProduct, Variant } from "@/components/admin/products/types";
 import baseQueryWithReauth from "@/utils/apiRequest";
 import { createApi } from "@reduxjs/toolkit/query/react";
 export interface Order {
-    createdAt?: string | number | Date;
+	createdAt?: string | number | Date;
 	products?: any;
 	_id?: string;
 	user: string;
@@ -34,11 +34,17 @@ export const orderApi = createApi({
 				totalPages: number;
 				limit: number;
 			},
-			{ page: number; limit: number }
+			{
+				page: number;
+				limit: number;
+				startDate?: string;
+				endDate?: string;
+				status?: string;
+			}
 		>({
-			query: ({ page, limit }) => ({
-				url: "/orders",
-				params: { page, limit },
+			query: ({ page, limit, status, startDate, endDate }) => ({
+				url: "/orders/getbyuser",
+				params: { page, limit, status, startDate, endDate },
 			}),
 			providesTags: (result) =>
 				result

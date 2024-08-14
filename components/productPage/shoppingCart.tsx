@@ -28,7 +28,7 @@ const Cart = ({ onSubmit }: CartProps) => {
     };
 
     const handleRemove = (item: any) => {
-        dispatch(removeFromCart(item));
+        dispatch(removeFromCart(item.variantId));
   
     };
 
@@ -76,7 +76,7 @@ const Cart = ({ onSubmit }: CartProps) => {
                 {cartItems.length === 0 ? (
                     <p>Your cart is empty.</p>
                 ) : (
-                    cartItems.map((item) => {
+                    cartItems.map((item:any) => {
                         const discountedPrice = calculateDiscountedPrice(item.price, item.discount);
                         return (
                             <li

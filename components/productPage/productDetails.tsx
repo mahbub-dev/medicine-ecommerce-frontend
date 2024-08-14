@@ -1,4 +1,4 @@
-import { addToCart, selectCartItems } from "@/store/cartSlice"; // Import selectCartItems
+import { addToCart, removeFromCart, selectCartItems } from "@/store/cartSlice"; // Import selectCartItems
 import { useGetProductByIdQuery } from "@/store/productApi";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -40,6 +40,7 @@ const ProductDetailsPage = ({ productId }: { productId: string }) => {
 	}
 
 	const handleVariantChange = (variantId: string) => {
+		dispatch(removeFromCart(variantId));
 		setSelectedVariant(variantId);
 	};
 
@@ -48,9 +49,10 @@ const ProductDetailsPage = ({ productId }: { productId: string }) => {
 
 		const variant = product.variants.find((v) => v._id === selectedVariant);
 		if (variant) {
+		
 			dispatch(
 				addToCart({
-					variantName:variant?.name,
+					variantName: variant?.name,
 					productId: product._id as string,
 					variantId: variant._id as string,
 					name: product.name,
