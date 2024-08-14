@@ -1,4 +1,5 @@
 import ProductDetailsPage from "@/components/productPage/productDetails";
+import UserLayout from "@/Layouts/UserLayout";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 
@@ -12,7 +13,7 @@ export const getServerSideProps = ({ params }: any) => {
 };
 export default function Index({params}:any) {
 	return (
-		<>
+		<UserLayout>
 			<Head>
 				<title>Product Details Page</title>
 				<meta
@@ -29,6 +30,6 @@ export default function Index({params}:any) {
 				className={`flex min-h-screen items-center justify-center p-4 ${inter.className}`}>
 				<ProductDetailsPage productId={params.id} />
 			</main>
-		</>
+		</UserLayout>
 	);
 }

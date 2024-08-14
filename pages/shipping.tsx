@@ -1,4 +1,5 @@
 import ShippingComponent from "@/components/shipping/shipping"; // Replace with the actual path to your shipping component
+import UserLayout from "@/Layouts/UserLayout";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 
@@ -6,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
 	return (
-		<>
+		<UserLayout>
 			<Head>
 				<title>My Medicine Store | Your Trusted Pharmacy</title>
 				<meta
@@ -49,6 +50,6 @@ export default function Home() {
 				className={`flex min-h-screen items-center justify-center p-4 ${inter.className}`}>
 				<ShippingComponent />
 			</main>
-		</>
+		</UserLayout>
 	);
 }

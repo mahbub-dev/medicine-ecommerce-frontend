@@ -1,4 +1,5 @@
 import OrdersPage from "@/components/orders";
+import UserLayout from "@/Layouts/UserLayout";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 
@@ -6,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Index() {
 	return (
-		<>
+		<UserLayout>
 			<Head>
 				<title>My Orders - My Medicine Store</title>
 				<meta
@@ -22,6 +23,6 @@ export default function Index() {
 			<main>
 				<OrdersPage />
 			</main>
-		</>
+		</UserLayout>
 	);
 }

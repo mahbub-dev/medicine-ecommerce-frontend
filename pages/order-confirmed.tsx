@@ -1,4 +1,5 @@
 import OrderConfirmationCard from "@/components/common/orderConfirmationCard";
+import UserLayout from "@/Layouts/UserLayout";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 
@@ -6,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
 	return (
-		<>
+		<UserLayout>
 			<Head>
 				<title>Confirmed order</title>
 				<meta name="description" content="your order is confirmed" />
@@ -20,6 +21,6 @@ export default function Home() {
 				className={`flex min-h-screen items-center justify-center p-4 ${inter.className}`}>
 				<OrderConfirmationCard />
 			</main>
-		</>
+		</UserLayout>
 	);
 }

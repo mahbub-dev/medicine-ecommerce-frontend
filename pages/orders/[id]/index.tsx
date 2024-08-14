@@ -1,5 +1,6 @@
 // pages/orders/[orderId].tsx
 import OrderDetailsPage from "@/components/orders/orderDetails";
+import UserLayout from "@/Layouts/UserLayout";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 
@@ -11,7 +12,7 @@ export default function Index({ params }: any) {
 
 	const id = params?.id;
 	return (
-		<>
+		<UserLayout>
 			<Head>
 				<title>Order Details - My Medicine Store</title>
 				<meta
@@ -27,6 +28,6 @@ export default function Index({ params }: any) {
 			<main>
 				<OrderDetailsPage id={id}/>
 			</main>
-		</>
+		</UserLayout>
 	);
 }

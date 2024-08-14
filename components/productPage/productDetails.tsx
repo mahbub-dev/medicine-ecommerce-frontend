@@ -9,7 +9,7 @@ import Modal from "../common/GlobalModal";
 import Cart from "./shoppingCart";
 
 const ProductDetailsPage = ({ productId }: { productId: string }) => {
-	const { data: product, isLoading } = useGetProductByIdQuery(productId);
+	const { data: product, isLoading,refetch } = useGetProductByIdQuery(productId);
 	const [selectedVariant, setSelectedVariant] = useState(
 		product?.variants[0]?._id || ""
 	);
@@ -18,7 +18,7 @@ const ProductDetailsPage = ({ productId }: { productId: string }) => {
 	const dispatch = useDispatch();
 	const cartItems = useSelector(selectCartItems); // Selector to get cart items from the Redux store
 	const [veiwCart, setViewCart] = useState(false);
-
+	useEffect(()=>{refetch()},[refetch])
 	useEffect(() => {
 		if (product) {
 			// Check if the product is already in the cart
@@ -70,6 +70,7 @@ const ProductDetailsPage = ({ productId }: { productId: string }) => {
 	const handleViewCart = () => {
 		setViewCart(true);
 	};
+
 
 	return (
 		<div className="max-w-4xl mx-auto p-4 shadow-lg border rounded">
