@@ -18,7 +18,7 @@ export interface IProduct {
 	discount: number;
 	inStock: number;
 	status: "active" | "inactive";
-	categories: string[];
+	categories: any[];
 	variants: any[];
 	createdAt?: Date; // Date when the variant was created
 	updatedAt?: Date; // Date when the variant was last updated

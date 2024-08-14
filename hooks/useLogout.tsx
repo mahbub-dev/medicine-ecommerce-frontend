@@ -10,7 +10,7 @@ const useLogout = () => {
 	const token = useSelector((slice: any) => slice.auth.refreshToken);
 	const router = useRouter();
 	const [logoutFromServer] = useLogoutMutation();
-	const handleLogout = useCallback(async () => {
+	const handleLogout  = useCallback(async () => {
 		try {
 			const res = await logoutFromServer({ token }).unwrap();
 			dispatch(logout());

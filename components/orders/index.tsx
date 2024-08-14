@@ -30,7 +30,7 @@ const OrdersPage = () => {
 			{data?.orders.length === 0 ? (
 				<p>You have no orders.</p>
 			) : (
-				<ul className="grid grid-cols-3 gap-4">
+				<ul className="flex flex-wrap w-[300px] gap-4">
 					{data?.orders.map((order: any) => (
 						<li
 							key={order._id}

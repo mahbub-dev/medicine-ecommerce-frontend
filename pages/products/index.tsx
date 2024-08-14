@@ -1,15 +1,10 @@
+import ProductList from "@/components/productPage/ProductLists";
 import UserLayout from "@/Layouts/UserLayout";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
-export const getServerSideProps = ({ params }: any) => {
-	return {
-		props: {
-			params,
-		},
-	};
-};
+
 export default function Index() {
 	return (
 		<UserLayout>
@@ -27,7 +22,7 @@ export default function Index() {
 			</Head>
 			<main
 				className={`flex min-h-screen items-center justify-center p-4 ${inter.className}`}>
-				{/* <ProductDetailsPage productId={params.productId} /> */}
+				<ProductList />
 			</main>
 		</UserLayout>
 	);

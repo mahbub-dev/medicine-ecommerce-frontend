@@ -4,7 +4,6 @@ import { useEffect } from "react";
 
 const OrderDetailsPage = ({ id }: any) => {
 	const router = useRouter();
-
 	const {
 		data: order,
 		isLoading,
@@ -16,23 +15,25 @@ const OrderDetailsPage = ({ id }: any) => {
 		refetch();
 	}, [refetch]);
 	if (isLoading) return <p>Loading...</p>;
-	if (error) return <p>Error loading order details.</p>;
-
+	// if (error) return <p>Error loading order details.</p>;
 	if (!order) return <p>No order found.</p>;
 	return (
-		<div className="container mx-auto p-4">
+		<div className="container mx-auto py-10">
 			<h1 className="text-2xl font-bold mb-4">Order Details</h1>
-            <p className="text-lg font-semibold">Order ID: {order._id}</p>
-          <p>Total Price: ${order.totalPrice.toFixed(2)}</p>
-          <p>Status: {order.status}</p>
-          <p>Placed at: {new Date(order?.createdAt as Date).toLocaleDateString()}</p>
-          <h2 className="text-xl font-semibold mt-4">Shipping Address</h2>
-          <p>Name: {order.shipping.shippingAddress.name}</p>
-          <p>Address: {order.shipping.shippingAddress.address}</p>
-          <p>Division: {order.shipping.shippingAddress.division}</p>
-          <p>District: {order.shipping.shippingAddress.district}</p>
-          <p>Sub-District: {order.shipping.shippingAddress.subDistrict}</p>
-          <p>Phone: {order.shipping.shippingAddress.phone}</p>
+			<p className="text-lg font-semibold">Order ID: {order._id}</p>
+			<p>Total Price: ${order.totalPrice.toFixed(2)}</p>
+			<p>Status: {order.status}</p>
+			<p>
+				Placed at:{" "}
+				{new Date(order?.createdAt as Date).toLocaleDateString()}
+			</p>
+			<h2 className="text-xl font-semibold mt-4">Shipping Address</h2>
+			<p>Name: {order.shipping.shippingAddress.name}</p>
+			<p>Address: {order.shipping.shippingAddress.address}</p>
+			<p>Division: {order.shipping.shippingAddress.division}</p>
+			<p>District: {order.shipping.shippingAddress.district}</p>
+			<p>Sub-District: {order.shipping.shippingAddress.subDistrict}</p>
+			<p>Phone: {order.shipping.shippingAddress.phone}</p>
 
 			<h2 className="text-xl font-bold mt-4">Items</h2>
 			<ul className="grid grid-cols-3 gap-4">

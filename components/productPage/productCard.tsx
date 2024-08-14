@@ -1,27 +1,57 @@
 // components/ProductCard.tsx
-import Link from "next/link";
-import React from "react";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
-interface ProductCardProps {
-  product: any; // Replace with your product type
-}
-
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  return (
-    <div className="product-card border p-4 rounded-lg">
-      <Link href={`/products/${product._id}`}>
-        <a>
-          <img
-            src={product.thumbnail}
-            alt={product.name}
-            className="w-full h-48 object-cover"
-          />
-          <h3 className="text-lg font-bold mt-2">{product.name}</h3>
-          <p className="text-xl font-bold">${product.price}</p>
-        </a>
-      </Link>
-    </div>
-  );
+const ProductCard: React.FC<{ product: any }> = ({ product }) => {
+	const { name, photos, description, categories, variants } = product;
+	const router = useRouter();
+	return (
+		<div
+			onClick={() => router.push(`/products/${product._id}`)}
+			className="bg-white rounded-lg w-[300px]  cursor-pointer shadow-lg overflow-hidden">
+			<div className="relative">
+				<Image
+					src={photos[0] || "/placeholder.png"}
+					alt={name}
+					width={100}
+					height={100}
+					className="w-full h-[150px] object-cover"
+				/>
+			</div>
+			<div className="p-6">
+				<h2 className="text-2xl font-bold text-gray-800">{name}</h2>
+				<p className="text-gray-600 mt-2">{description}</p>
+				{/* <div className="mt-4">
+					<h3 className="text-lg font-semibold text-gray-800">
+						Categories:
+					</h3>
+					<div className="flex flex-wrap gap-2 mt-2">
+						{categories.map((category: any) => (
+							<span
+								key={category?._id as string}
+								className="bg-blue-500 text-white px-2 py-1 rounded-full text-sm">
+								{category?.name as string}
+							</span>
+						))}
+					</div>
+				</div> */}
+				<div className="mt-4">
+					<h3 className="text-lg font-semibold text-gray-800">
+						Variants:
+					</h3>
+					<div className="flex flex-wrap gap-2 mt-2">
+						{variants.map((variant: any) => (
+							<span
+								key={variant._id}
+								className="bg-green-500 text-white px-2 py-1 rounded-full text-sm">
+								{variant.name} - ${variant.price}
+							</span>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default ProductCard;

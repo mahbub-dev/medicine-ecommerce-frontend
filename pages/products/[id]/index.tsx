@@ -27,7 +27,7 @@ export default function Index({params}:any) {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<main
-				className={`flex min-h-screen items-center justify-center p-4 ${inter.className}`}>
+				className={` ${inter.className}`}>
 				<ProductDetailsPage productId={params.id} />
 			</main>
 		</UserLayout>

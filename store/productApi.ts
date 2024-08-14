@@ -43,7 +43,30 @@ export const productApi = createApi({
 					  ]
 					: [{ type: "Product", id: "LIST" }],
 		}),
-
+		getProductByCategory: builder.query<
+			{
+				products: IProduct[];
+				total: number;
+				totalPages: number;
+				limit: number;
+			},
+			{ page?: number; limit?: number; categories: string[] }
+		>({
+			query: ({ categories, page = 1, limit = 10 }) => ({
+				url: `/products/by-category/`,
+				params: { page, limit, categories },
+			}),
+			providesTags: (result) =>
+				result
+					? [
+							...result.products.map(({ _id }) => ({
+								type: "Product" as const,
+								id: _id,
+							})),
+							{ type: "Product", id: "LIST" },
+					  ]
+					: [{ type: "Product", id: "LIST" }],
+		}),
 		// Query for getting a single product by ID
 		getProductById: builder.query<IProduct, string>({
 			query: (id) => ({
@@ -103,4 +126,5 @@ export const {
 	useGetProductByIdQuery,
 	useUpdateProductMutation,
 	useDeleteProductMutation,
+	useGetProductByCategoryQuery
 } = productApi;
