@@ -1,3 +1,5 @@
+import Footer from "@/components/common/Footer";
+import Navbar from "@/components/common/Navbar";
 import { RootState } from "@/store";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -16,7 +18,13 @@ const AuthLayout = ({ children }: any) => {
 	if (user) {
 		return <></>;
 	}
-	return children;
+	return (
+		<>
+			<Navbar />
+			{children}
+			<Footer />
+		</>
+	);
 };
 
 export default AuthLayout;

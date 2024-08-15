@@ -25,7 +25,7 @@ export default function Index({ params }: any) {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<main>
+			<main className="">
 				<OrderDetailsPage id={id}/>
 			</main>
 		</UserLayout>

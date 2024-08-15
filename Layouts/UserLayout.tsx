@@ -7,16 +7,18 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const inter = Inter({ subsets: ["latin"] });
-const UserLayout = ({ children }: any) => {
+const UserLayout = ({ children, isCheckAuth = true }: any) => {
 	const router = useRouter();
 	const user = useSelector((state: any) => state.auth.user);
 	useEffect(() => {
-		if (user?.role !== "user") {
-			router.push("/auth/login");
+		if (isCheckAuth) {
+			if (user?.role !== "user") {
+				router.push(`/auth/login?redirect=${router.pathname}`);
+			}
 		}
-	}, [router, user?.role]);
+	}, [isCheckAuth, router, user?.role]);
 
-	if (user?.role !== "user") {
+	if (isCheckAuth && user?.role !== "user") {
 		return <></>;
 	}
 	return (

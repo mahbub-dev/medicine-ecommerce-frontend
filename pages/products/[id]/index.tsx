@@ -13,7 +13,7 @@ export const getServerSideProps = ({ params }: any) => {
 };
 export default function Index({params}:any) {
 	return (
-		<UserLayout>
+		<UserLayout isCheckAuth={false}>
 			<Head>
 				<title>Product Details Page</title>
 				<meta

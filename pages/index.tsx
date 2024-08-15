@@ -38,7 +38,7 @@ const RenderProducts = () => {
 };
 export default function Home() {
 	return (
-		<UserLayout>
+		<UserLayout isCheckAuth={false}>
 			<Head>
 				<title> My Medicine Store</title>
 				<meta

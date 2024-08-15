@@ -12,10 +12,10 @@ const OrdersPage = () => {
 	const { data, isLoading, error, refetch } = useGetOrdersQuery({
 		page,
 		limit: 10,
-		startDate ,
+		startDate,
 		status,
 		endDate,
-		getBy:'getbyuser'
+		getBy: "getbyuser",
 	});
 	useEffect(() => {
 		refetch();
@@ -31,14 +31,15 @@ const OrdersPage = () => {
 			{data?.orders.length === 0 ? (
 				<p>You have no orders.</p>
 			) : (
-				<ul className="flex flex-wrap w-[300px] gap-4">
+				<ul className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1  gap-4">
 					{data?.orders.map((order: any) => (
 						<li
 							key={order._id}
 							className="mb-4 p-4 border rounded-lg">
-							<p>Order ID: {order._id}</p>
+							{/* <p>Order ID: {order._id}</p> */}
+							<p>Products: {order.products[0].product.name} <span className="text-green-500">{order.products.length>1  && 'and more..'}</span></p>
 							<p>Total: ${order.totalPrice.toFixed(2)}</p>
-							<p>Status: {order.status}</p>
+							<p className="capitalize">Status: {order.status}</p>
 							<p>
 								Placed at:{" "}
 								{new Date(order.createdAt).toLocaleDateString()}

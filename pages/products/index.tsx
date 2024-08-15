@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Index() {
 	return (
-		<UserLayout>
+		<UserLayout isCheckAuth={false}>
 			<Head>
 				<title>Product Details Page</title>
 				<meta

@@ -4,7 +4,7 @@ import GlobalPagination from "@/components/common/Pagination"; // Import the pag
 import usePagination from "@/hooks/usePagination";
 import useOrderFilters from "@/hooks/userFilterHook";
 import { Order, useGetOrdersQuery } from "@/store/orderApi";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GrEdit, GrFormView } from "react-icons/gr";
 import OrderedProductView from "./OrderedProductsVieiw";
 import ShippingAddressView from "./ShippingAddressView";
@@ -63,7 +63,7 @@ const OrderList: React.FC<OrderListProps> = ({ onEdit }) => {
 				</div>
 			)}
 			{(data?.orders.length as number) > 0 && (
-				<Fragment>
+				<div className="mb-4">
 					<table className="min-w-full bg-white">
 						<thead className="bg-gray-800 text-white">
 							<tr>
@@ -140,14 +140,24 @@ const OrderList: React.FC<OrderListProps> = ({ onEdit }) => {
 										).toLocaleDateString()}
 									</td>
 									<td
-										className="py-3 px-6 cursor-pointer  capitalize hover:underline hover:text-blue-500"
-										onClick={() =>
-											setOpenUpdateStatusView({
-												status: order.status,
-												orderId: order._id,
-											})
-										}>
-										<span className="inline mr-2 " >{order.status}</span>
+										className={`${
+											order.status === "cancelled"
+												? "text-red-500"
+												: ""
+										} py-3 px-6  hover:underline hover:text-blue-500 cursor-pointer  capitalize  `}
+										onClick={() => {
+										
+												setOpenUpdateStatusView({
+													status: order.status,
+													orderId: order._id,
+													statusUpdates:
+														order.statusUpdates,
+												});
+										}}>
+										<span className="inline mr-2 ">
+											{order.status}
+										</span>
+
 										<GrEdit className="inline" />
 									</td>
 									<td className="py-3 px-6">
@@ -163,7 +173,7 @@ const OrderList: React.FC<OrderListProps> = ({ onEdit }) => {
 						totalPages={data?.totalPages as number}
 						onPageChange={() => {}}
 					/>
-				</Fragment>
+				</div>
 			)}
 
 			<Modal

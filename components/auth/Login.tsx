@@ -14,8 +14,7 @@ const Login = () => {
 	const router = useRouter();
 	const [login, { isLoading }] = useLoginMutation(); // RTK Query login mutation
 	const dispatch = useDispatch(); // Use dispatch from Redux
-
-
+	const redirect = router.query?.redirect;
 	const validationSchema = Yup.object().shape({
 		email: Yup.string()
 			.email("Invalid email")
@@ -41,9 +40,10 @@ const Login = () => {
 				})
 			);
 
-			toast.success("Login successful!");
-			console.log(response.user);
+			// toast.success("Login successful!");
+			// console.log(response.user);
 			// Redirect based on user role
+			if (redirect) return router.push(redirect as string);
 			if (response.user.role === "admin") router.push("/admin/users");
 			if (response.user.role === "user") router.push("/");
 		} catch (error: any) {
@@ -58,73 +58,72 @@ const Login = () => {
 		}
 	};
 
-
-		return (
-			<div className="flex md:w-[500px] items-center justify-center">
-				<div className="max-w-md w-full bg-white p-8 border border-gray-300 rounded-lg shadow-md">
-					<h2 className="text-2xl font-semibold text-center mb-6">
-						Login
-					</h2>
-					<Formik
-						initialValues={{ email: "", password: "" }}
-						validationSchema={validationSchema}
-						onSubmit={handleSubmit}>
-						{() => (
-							<Form className="space-y-6">
-								<div>
-									<label className="block text-gray-700">
-										Email:
-									</label>
-									<Field
-										name="email"
-										type="email"
-										className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
-									/>
-									<ErrorMessage
-										name="email"
-										component="div"
-										className="text-red-500 text-sm mt-1"
-									/>
-								</div>
-								<div>
-									<label className="block text-gray-700">
-										Password:
-									</label>
-									<Field
-										name="password"
-										type="password"
-										className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
-									/>
-									<ErrorMessage
-										name="password"
-										component="div"
-										className="text-red-500 text-sm mt-1"
-									/>
-								</div>
-								<button
-									type="submit"
-									disabled={loading || isLoading}
-									className="btn-primary">
-									{loading || isLoading
-										? "Logging in..."
-										: "Login"}
-								</button>
-							</Form>
-						)}
-					</Formik>
-					<div className="mt-4 text-center">
-						<p className="text-gray-700">
-							Don&apos;t have an account?{" "}
-							<Link
-								href="/auth/register"
-								className="text-gray-500 hover:underline focus:outline-none">
-								Register
-							</Link>
-						</p>
-					</div>
+	return (
+		<div className="flex md:w-[500px] items-center justify-center">
+			<div className="max-w-md w-full bg-white p-8 border border-gray-300 rounded-lg shadow-md">
+				<h2 className="text-2xl font-semibold text-center mb-6">
+					Login
+				</h2>
+				<Formik
+					initialValues={{ email: "", password: "" }}
+					validationSchema={validationSchema}
+					onSubmit={handleSubmit}>
+					{() => (
+						<Form className="space-y-6">
+							<div>
+								<label className="block text-gray-700">
+									Email:
+								</label>
+								<Field
+									name="email"
+									type="email"
+									className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+								/>
+								<ErrorMessage
+									name="email"
+									component="div"
+									className="text-red-500 text-sm mt-1"
+								/>
+							</div>
+							<div>
+								<label className="block text-gray-700">
+									Password:
+								</label>
+								<Field
+									name="password"
+									type="password"
+									className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+								/>
+								<ErrorMessage
+									name="password"
+									component="div"
+									className="text-red-500 text-sm mt-1"
+								/>
+							</div>
+							<button
+								type="submit"
+								disabled={loading || isLoading}
+								className="btn-primary">
+								{loading || isLoading
+									? "Logging in..."
+									: "Login"}
+							</button>
+						</Form>
+					)}
+				</Formik>
+				<div className="mt-4 text-center">
+					<p className="text-gray-700">
+						Don&apos;t have an account?{" "}
+						<Link
+							href="/auth/register"
+							className="text-gray-500 hover:underline focus:outline-none">
+							Register
+						</Link>
+					</p>
 				</div>
 			</div>
-		);
+		</div>
+	);
 };
 
 export default Login;

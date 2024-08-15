@@ -1,7 +1,7 @@
-// components/Navbar.tsx
 import useLogout from "@/hooks/useLogout";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -10,12 +10,18 @@ const Navbar = () => {
 	const user = useSelector((state: any) => state.auth.user); // Replace with your actual authentication logic
 	const userName = user?.name;
 	const isLoggedIn = !!user;
-	const  handleLogout  = useLogout();
+	const handleLogout = useLogout();
+	const router = useRouter();
+	const currentPath = router.pathname;
+
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
 	};
 
-
+	const getLinkClassName = (path: string) =>
+		`block py-2 px-4 rounded hover:underline ${
+			currentPath === path ? "bg-gray-600" : ""
+		}`;
 
 	return (
 		<nav className="bg-gray-800 text-white">
@@ -26,28 +32,36 @@ const Navbar = () => {
 					</Link>
 				</div>
 				<div className="hidden md:flex space-x-4">
-					<Link href="/">
-						<span className="hover:underline">Home</span>
+					<Link href="/" className={getLinkClassName("/")}>
+						Home
 					</Link>
-					<Link href="/products">
-						<span className="hover:underline">Products</span>
+					<Link
+						href="/products"
+						className={getLinkClassName("/products")}>
+						Products
 					</Link>
 					{isLoggedIn && (
-						<Link href="/orders">
-							<span className="hover:underline">My Orders</span>
+						<Link
+							href="/orders"
+							className={getLinkClassName("/orders")}>
+							My Orders
 						</Link>
 					)}
 
-					{/* <Link href="/contact">
-						<span className="hover:underline">Contact</span>
-					</Link> */}
-					<button onClick={handleLogout} className="text-white ">
-						Logout
-					</button>
-				</div>
-
-				<div className="hidden md:flex items-center space-x-4">
 					{isLoggedIn ? (
+						<button onClick={handleLogout} className="text-white">
+							Logout
+						</button>
+					) : (
+						<Link
+							href="/auth/login"
+							className={getLinkClassName("/auth/login")}>
+							Login
+						</Link>
+					)}
+				</div>
+				<div className="hidden md:flex items-center space-x-4">
+					{isLoggedIn && (
 						<div className="flex items-center gap-2">
 							<Image
 								src={user?.photo}
@@ -58,10 +72,6 @@ const Navbar = () => {
 							/>
 							<span className="block">{userName}</span>
 						</div>
-					) : (
-						<Link href="/login">
-							<span className="hover:underline">Login</span>
-						</Link>
 					)}
 				</div>
 				<div className="md:hidden">
@@ -86,28 +96,30 @@ const Navbar = () => {
 			{isOpen && (
 				<div className="md:hidden bg-gray-700">
 					<div className="space-y-2 p-4">
-						<Link href="/">
-							<span className="block hover:underline">Home</span>
+						<Link href="/" className={getLinkClassName("/")}>
+							Home
 						</Link>
-						<Link href="/products">
-							<span className="block hover:underline">
-								Products
-							</span>
+						<Link
+							href="/products"
+							className={getLinkClassName("/products")}>
+							Products
 						</Link>
-						<Link href="/about">
-							<span className="block hover:underline">About</span>
+						<Link
+							href="/about"
+							className={getLinkClassName("/about")}>
+							About
 						</Link>
-						<Link href="/contact">
-							<span className="block hover:underline">
-								Contact
-							</span>
+						<Link
+							href="/contact"
+							className={getLinkClassName("/contact")}>
+							Contact
 						</Link>
 						{isLoggedIn ? (
 							<>
-								<Link href="/profile">
-									<span className="block hover:underline">
-										{userName}
-									</span>
+								<Link
+									href="/profile"
+									className={getLinkClassName("/profile")}>
+									{userName}
 								</Link>
 								<button
 									onClick={handleLogout}
@@ -116,10 +128,10 @@ const Navbar = () => {
 								</button>
 							</>
 						) : (
-							<Link href="/login">
-								<span className="block hover:underline">
-									Login
-								</span>
+							<Link
+								href="/login"
+								className={getLinkClassName("/login")}>
+								Login
 							</Link>
 						)}
 					</div>
