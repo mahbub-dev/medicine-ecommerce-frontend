@@ -1,5 +1,8 @@
-import { useGetProductByIdQuery } from "@/store/apis/productApi";
-import { addToCart, removeFromCart, selectCartItems } from "@/store/slices/cartSlice"; // Import selectCartItems
+import {
+	addToCart,
+	removeFromCart,
+	selectCartItems,
+} from "@/store/slices/cartSlice"; // Import selectCartItems
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
@@ -9,12 +12,15 @@ import Modal from "../common/GlobalModal";
 import RelatedProduct from "./relatedProduct";
 import Cart from "./shoppingCart";
 
-const ProductDetailsPage = ({ productId }: { productId: string }) => {
-	const {
-		data: product,
-		isLoading,
-		refetch,
-	} = useGetProductByIdQuery(productId);
+const ProductDetailsPage = ({
+	productId,
+	isLoading,
+	product,
+}: {
+	productId: string;
+	isLoading: boolean;
+	product: any;
+}) => {
 	const [selectedVariant, setSelectedVariant] = useState(
 		product?.variants[0]?._id || ""
 	);
@@ -23,9 +29,7 @@ const ProductDetailsPage = ({ productId }: { productId: string }) => {
 	const dispatch = useDispatch();
 	const cartItems = useSelector(selectCartItems); // Selector to get cart items from the Redux store
 	const [veiwCart, setViewCart] = useState(false);
-	useEffect(() => {
-		refetch();
-	}, [refetch]);
+
 	useEffect(() => {
 		if (product) {
 			// Check if the product is already in the cart
@@ -39,11 +43,19 @@ const ProductDetailsPage = ({ productId }: { productId: string }) => {
 	}, [cartItems, product, selectedVariant]);
 
 	if (isLoading) {
-		return <p className="flex items-center min-h-screen justify-center">Loading...</p>;
+		return (
+			<p className="flex items-center min-h-screen justify-center">
+				Loading...
+			</p>
+		);
 	}
 
 	if (!product) {
-		return <p className="flex items-center min-h-screen justify-center">Product not found.</p>;
+		return (
+			<p className="flex items-center min-h-screen justify-center">
+				Product not found.
+			</p>
+		);
 	}
 
 	const handleVariantChange = (variantId: string) => {
@@ -54,7 +66,7 @@ const ProductDetailsPage = ({ productId }: { productId: string }) => {
 	const handleAddToCart = () => {
 		if (!selectedVariant) return;
 
-		const variant = product.variants.find((v) => v._id === selectedVariant);
+		const variant = product.variants.find((v:any) => v._id === selectedVariant);
 		if (variant) {
 			dispatch(
 				addToCart({
@@ -79,7 +91,7 @@ const ProductDetailsPage = ({ productId }: { productId: string }) => {
 
 	return (
 		<div className="container mx-auto py-10">
-			<div className="max-w-4xl mx-auto p-4 shadow-lg border rounded">
+			<div className="max-w-4xl mx-auto p-4 mb-10 shadow-lg border rounded">
 				<div className="flex flex-col md:flex-row">
 					<div className="flex-shrink-0 mb-4 md:mb-0 md:mr-6">
 						<Image
@@ -102,7 +114,7 @@ const ProductDetailsPage = ({ productId }: { productId: string }) => {
 								Select Variant:
 							</p>
 							<div className="flex space-x-4">
-								{product.variants.map((variant) => (
+								{product.variants.map((variant:any) => (
 									<button
 										key={variant._id}
 										className={`py-2 px-4 rounded-lg border ${
@@ -122,7 +134,7 @@ const ProductDetailsPage = ({ productId }: { productId: string }) => {
 							<p className="text-2xl font-bold text-green-600 mb-2">
 								$
 								{product.variants.find(
-									(v) => v._id === selectedVariant
+									(v:any) => v._id === selectedVariant
 								)?.price || 0}
 							</p>
 							<div className="flex items-center">
@@ -184,6 +196,7 @@ const ProductDetailsPage = ({ productId }: { productId: string }) => {
 					</div>
 				</div>
 			</div>
+
 			<RelatedProduct
 				categories={product.categories.map((item: any) => item.slug)}
 				productId={productId}

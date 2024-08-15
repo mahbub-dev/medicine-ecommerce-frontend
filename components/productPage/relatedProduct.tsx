@@ -31,11 +31,11 @@ const RelatedProduct: React.FC<ProductsByCategoryProps> = ({
 	}, [refetch]);
 
 	if (isLoading) return <p className="flex items-center justify-center">Loading...</p>;
-	if (error) return <p className="flex items-center justify-center">{"No Data Found"}</p>;
+	// if (error) return <p className="flex items-center justify-center">{"No Data Found"}</p>;
 
 	return (
 		<div className="mt-10 ">
-			<h1 className="text-4xl font-bold mb-5">Related</h1>
+			<h1 className="text-3xl font-bold mb-5">Related Products</h1>
 			<div className="flex flex-wrap gap-4 ">
 				{data?.products.length === 0
 					? "No data found"
