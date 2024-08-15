@@ -64,6 +64,7 @@ const Navbar = () => {
 					{isLoggedIn && (
 						<div className="flex items-center gap-2">
 							<Image
+							title={'user photo'}
 								src={user?.photo}
 								alt="User Photo"
 								width={50}

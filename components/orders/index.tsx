@@ -22,7 +22,7 @@ const OrdersPage = () => {
 	}, [refetch]);
 
 	if (isLoading) return <p>Loading...</p>;
-	if (error) return <p>Error loading orders.</p>;
+	if (error) return <p className="flex min-h-[60vh] items-center justify-center p-4">Error loading orders.</p>;
 
 	return (
 		<div className="container mx-auto p-4">

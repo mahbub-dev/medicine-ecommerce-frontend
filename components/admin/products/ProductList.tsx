@@ -90,10 +90,12 @@ const ProductList: React.FC<ProductListProps> = ({ onEdit, onPageChange }) => {
 					))}
 				</tbody>
 			</table>
-			<GlobalPagination
-				totalPages={data?.totalPages ?? 1}
-				onPageChange={onPageChange}
-			/>
+			{(data?.products.length as number) > 0 && (
+				<GlobalPagination
+					totalPages={data?.totalPages ?? 1}
+					onPageChange={onPageChange}
+				/>
+			)}
 		</div>
 	);
 };

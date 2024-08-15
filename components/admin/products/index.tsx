@@ -34,7 +34,7 @@ const ProductManager: React.FC = () => {
 			{/* <h1 className="text-4xl font-bold mb-8">Product Management</h1> */}
 			{/* Button to toggle Add Product Form */}
 			<button
-				className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+				className="mt-4 px-4 py-2 bg-gray-500 text-white rounded"
 				onClick={() => setShowProductForm(!showProductForm)}>
 				{showProductForm ? "Cancel" : "Add Product"}
 			</button>

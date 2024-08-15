@@ -61,7 +61,7 @@ const Sidebar = () => {
 									className={linkClasses("/super-admin")}
 									href="/super-admin">
 									<FaUsers />
-									<span>Admins</span>
+									<span>Users</span>
 								</Link>
 							</div>
 						)}

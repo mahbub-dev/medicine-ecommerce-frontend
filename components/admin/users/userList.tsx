@@ -20,7 +20,8 @@ const UsersList = () => {
 	}, [refetch]);
 
 	if (isLoading) return <div className="text-center">Loading...</div>;
-	if (error) return <div className="text-center">No Data Found</div>;
+	if (error || data?.users.length === 0)
+		return <div className="text-center">No Data Found</div>;
 	// if (error) return <div>Error loading users.</div>;
 
 	// Use real data if available; otherwise, fallback to dummy data
@@ -77,11 +78,13 @@ const UsersList = () => {
 					</tbody>
 				</table>
 			</div>
-			<GlobalPagination
-				// total={totalData}
-				totalPages={data?.totalPages as number}
-				onPageChange={(newPage) => {}}
-			/>
+			{(data?.users.length as number) > 0 && (
+				<GlobalPagination
+					// total={totalData}
+					totalPages={data?.totalPages as number}
+					onPageChange={(newPage) => {}}
+				/>
+			)}
 			<Modal
 				isOpen={openRoleUpdateView}
 				onClose={function (): void {

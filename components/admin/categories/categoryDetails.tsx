@@ -38,7 +38,7 @@ const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id }) => {
 	if (error) return <div>404 not found</div>;
 
 	return (
-		<div className="container mx-auto p-6">
+		<div className=" mx-auto p-6">
 			{/* <h1 className="text-4xl font-bold mb-8">Category Details</h1> */}
 			<button
 				className="px-3 py-2 bg-gray-500 rounded text-white"
