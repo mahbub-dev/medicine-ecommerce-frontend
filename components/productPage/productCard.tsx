@@ -1,7 +1,7 @@
 // components/ProductCard.tsx
+import placeholderImage from '@/public/300x150.svg';
 import Image from "next/image";
 import { useRouter } from "next/router";
-
 const ProductCard: React.FC<{ product: any }> = ({ product }) => {
 	const { name, photos, description, categories, variants } = product;
 	const router = useRouter();
@@ -11,7 +11,7 @@ const ProductCard: React.FC<{ product: any }> = ({ product }) => {
 			className="bg-white rounded-lg w-[300px]  cursor-pointer shadow-lg overflow-hidden">
 			<div className="relative">
 				<Image
-					src={photos[0] || "/placeholder.png"}
+					src={product.photos[0]||placeholderImage}
 					alt={name}
 					width={100}
 					height={100}

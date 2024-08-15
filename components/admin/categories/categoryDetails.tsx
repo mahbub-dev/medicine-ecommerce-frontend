@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Modal from "@/components/common/GlobalModal";
 import usePagination from "@/hooks/usePagination";
+import placeholderImage from '@/public/50x50.svg';
 import {
 	useGetCategoryByIdQuery,
 	useGetSubCategoriesByIdQuery,
@@ -8,7 +9,6 @@ import {
 import React, { useEffect, useState } from "react";
 import CategoryForm from "./categoryForm";
 import CategoryList from "./categoryLIst";
-
 interface CategoryDetailsProps {
 	id: string;
 }
@@ -53,7 +53,7 @@ const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id }) => {
 								<img
 									width={100}
 									height={100}
-									src={`${category.thumbnail}`}
+									src={`${category.thumbnail||placeholderImage}`}
 									alt={category.name}
 									className="mt-4 mx-auto border rounded-full object-cover"
 								/>

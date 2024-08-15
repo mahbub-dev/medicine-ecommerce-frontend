@@ -1,10 +1,10 @@
 import useLogout from "@/hooks/useLogout";
+import placeholderImage from '@/public/50x50.svg';
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const user = useSelector((state: any) => state.auth.user); // Replace with your actual authentication logic
@@ -78,7 +78,7 @@ const Navbar = () => {
 						<div className="flex items-center gap-2">
 							<Image
 								title={"user photo"}
-								src={user?.photo}
+								src={user?.photo || placeholderImage}
 								alt="User Photo"
 								width={50}
 								height={50}

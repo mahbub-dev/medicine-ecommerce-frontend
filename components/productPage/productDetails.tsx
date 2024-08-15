@@ -1,3 +1,4 @@
+import placeholderImage from '@/public/300x350.svg';
 import {
 	addToCart,
 	removeFromCart,
@@ -11,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "../common/GlobalModal";
 import RelatedProduct from "./relatedProduct";
 import Cart from "./shoppingCart";
-
 const ProductDetailsPage = ({
 	productId,
 	isLoading,
@@ -100,7 +100,7 @@ const ProductDetailsPage = ({
 						<Image
 							width={200}
 							height={200}
-							src={product.photos[0]}
+							src={product.photos[0] || placeholderImage}
 							alt={product.name}
 							className="w-[300px] h-full object-cover rounded-lg shadow-md"
 						/>

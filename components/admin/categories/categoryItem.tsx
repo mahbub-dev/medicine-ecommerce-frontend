@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
+import placeholderImage from '@/public/50x50.svg';
 import { ICategory } from "@/store/apis/categoryApi";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-
 interface CategoryItemProps {
 	category: ICategory;
 	onEdit: any;
@@ -26,7 +26,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({
 				<img
 					width={100}
 					height={100}
-					src={`${category.thumbnail}`}
+					src={`${category.thumbnail || placeholderImage}`}
 					alt={category.name}
 					className="h-10 w-10 rounded-full object-cover"
 				/>
