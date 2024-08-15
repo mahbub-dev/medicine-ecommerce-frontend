@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['localhost', ''], // Replace with your actual domains
+    domains: ['localhost', 'medicine-ecommerce-backend.onrender.com'], // Replace with your actual domains
   },
 };
 

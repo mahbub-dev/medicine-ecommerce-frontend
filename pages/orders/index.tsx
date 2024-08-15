@@ -20,7 +20,7 @@ export default function Index() {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<main className="flex min-h-screen items-center justify-center p-4">
+			<main className="">
 				<OrdersPage />
 			</main>
 		</UserLayout>

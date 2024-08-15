@@ -21,7 +21,7 @@ export default function Index() {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<main
-				className={`flex min-h-screen items-center justify-center p-4 ${inter.className}`}>
+				className={`flex min-h-[60vh] items-center justify-center p-4 ${inter.className}`}>
 				<ProductList />
 			</main>
 		</UserLayout>

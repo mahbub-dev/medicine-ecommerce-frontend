@@ -80,7 +80,7 @@ const Filter = () => {
 				</div>
 				<button
 					onClick={handleReset}
-					className="mt-4 p-2 bg-red-500 text-white rounded-md hover:bg-red-600">
+					className=" p-2 bg-red-500 text-white rounded-md hover:bg-red-600">
 					Reset Filters
 				</button>
 			</div>
