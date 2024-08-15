@@ -21,14 +21,14 @@ const OrdersPage = () => {
 		refetch();
 	}, [refetch]);
 
-	if (isLoading) return <p>Loading...</p>;
+	if (isLoading) return <p className="flex min-h-[60vh] items-center justify-center p-4">Loading...</p>;
 	if (error) return <p className="flex min-h-[60vh] items-center justify-center p-4">Error loading orders.</p>;
 
 	return (
 		<div className="container mx-auto p-4">
 			<h1 className="text-2xl font-bold mb-4">Your Orders</h1>
 			<Filter />
-			<div className="flex min-h-[60vh] items-center justify-center p-4">
+			<div className=" min-h-[60vh]  p-4">
 				{data?.orders.length === 0 ? (
 					<p>You have no orders.</p>
 				) : (

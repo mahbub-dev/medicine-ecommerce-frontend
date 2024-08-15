@@ -178,6 +178,7 @@ const OrderList: React.FC<OrderListProps> = ({ onEdit }) => {
 
 			<Modal
 				isOpen={openProductsView}
+				className="max-w-[800px]"
 				onClose={function (): void {
 					setOpenProductsView(null);
 				}}>

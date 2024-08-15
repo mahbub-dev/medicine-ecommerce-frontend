@@ -38,10 +38,11 @@ const OrderStatusUpdater: React.FC<OrderStatusUpdaterProps> = ({
 		return possibleStatuses;
 	};
 
-	const [status, setStatus] = useState<string>(currentStatus.status);
+	
 	const [availableStatuses, setAvailableStatuses] = useState<string[]>(
 		computeAvailableStatuses(currentStatus.status)
 	);
+	const [status, setStatus] = useState<string>(availableStatuses[0]);
 	const [updateOrderStatus, { isLoading: isUpdating }] =
 		useUpdateOrderStatusMutation();
 
@@ -56,6 +57,7 @@ const OrderStatusUpdater: React.FC<OrderStatusUpdaterProps> = ({
 
 	const handleUpdateClick = async () => {
 		try {
+			console.log(status)
 			await updateOrderStatus({ _id: currentStatus.orderId, status });
 			await onStatusChange(status);
 		} catch (error: any) {
@@ -64,19 +66,19 @@ const OrderStatusUpdater: React.FC<OrderStatusUpdaterProps> = ({
 	};
 
 	return (
-		<div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden p-6">
+		<div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden p-4">
 			<StatusUpdateTimeline statusUpdates={currentStatus.statusUpdates} />
 			{!["cancelled", "delivered"].includes(currentStatus.status) && (
 				<>
-					<div className="flex items-center mb-4">
+					{/* <div className="flex items-center mb-4 mt-4">
 						<span className="font-medium text-gray-700 mr-4">
 							Current Status:
 						</span>
 						<span className="text-gray-900 capitalize">
 							{currentStatus.status}
 						</span>
-					</div>
-					<div className="mb-4">
+					</div> */}
+					<div className="my-4">
 						<select
 							value={status}
 							onChange={handleStatusChange}

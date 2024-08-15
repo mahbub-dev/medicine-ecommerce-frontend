@@ -8,13 +8,14 @@ import { useSelector } from "react-redux";
 const AuthLayout = ({ children }: any) => {
 	const user = useSelector((state: RootState) => state.auth.user);
 	const router = useRouter();
+	const redirect = router.query?.redirect;
 	useEffect(() => {
-		if (user) {
+		if (!redirect && user) {
 			user.role === "admin" && router.push("/admin/users");
 			user.role === "super-admin" && router.push("/super-admin");
 			user.role === "user" && router.push("/");
 		}
-	}, [user, router]);
+	}, [user, router, redirect]);
 	if (user) {
 		return <></>;
 	}

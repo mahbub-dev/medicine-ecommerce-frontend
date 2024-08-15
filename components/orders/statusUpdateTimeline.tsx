@@ -12,8 +12,8 @@ interface StatusUpdateTimelineProps {
 
 const StatusUpdateTimeline: React.FC<StatusUpdateTimelineProps> = ({ statusUpdates }) => {
   return (
-    <div className=" mx-auto py-10">
-      <h2 className="text-2xl font-bold mb-6">Order Status Timeline</h2>
+    <div className=" mx-auto ">
+      <h2 className="text-lg font-bold mb-6">Order Status Timeline</h2>
       <div className="relative flex flex-col items-center">
         {/* Timeline Line */}
         {/* <div className="absolute inset-y-0 left-1/2 w-full max-w-screen-lg flex items-center">

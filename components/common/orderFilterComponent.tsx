@@ -73,8 +73,9 @@ const Filter = () => {
 						className="p-2 border border-gray-300 rounded-md">
 						<option value="">All</option>
 						<option value="pending">Pending</option>
-						<option value="completed">Completed</option>
+						<option value="processing">Processing</option>
 						<option value="shipped">Shipped</option>
+						<option value="delivered">Delivered</option>
 						<option value="cancelled">Cancelled</option>
 					</select>
 				</div>

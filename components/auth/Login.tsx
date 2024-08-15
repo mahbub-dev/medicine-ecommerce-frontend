@@ -43,9 +43,12 @@ const Login = () => {
 			// toast.success("Login successful!");
 			// console.log(response.user);
 			// Redirect based on user role
-			if (redirect) return router.push(redirect as string);
-			if (response.user.role === "admin") router.push("/admin/users");
-			if (response.user.role === "user") router.push("/");
+			if (redirect) {
+				router.push(redirect as string);
+			} else {
+				// if (response.user.role === "admin") router.push("/admin/users");
+				// if (response.user.role === "user") router.push("/");
+			}
 		} catch (error: any) {
 			// Handle errors - display error message
 			toast.error(
