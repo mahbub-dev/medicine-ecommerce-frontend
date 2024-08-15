@@ -1,10 +1,10 @@
 import {
-    clearCart,
-    decrementQuantity,
-    incrementQuantity,
-    removeFromCart,
-    selectCartItems,
-} from "@/store/cartSlice";
+	clearCart,
+	decrementQuantity,
+	incrementQuantity,
+	removeFromCart,
+	selectCartItems,
+} from "@/store/slices/cartSlice";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";

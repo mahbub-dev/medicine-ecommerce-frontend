@@ -1,5 +1,5 @@
 import StatusUpdateTimeline from "@/components/orders/statusUpdateTimeline";
-import { useUpdateOrderStatusMutation } from "@/store/orderApi";
+import { useUpdateOrderStatusMutation } from "@/store/apis/orderApi";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 

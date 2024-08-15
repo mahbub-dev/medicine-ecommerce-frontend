@@ -1,7 +1,7 @@
 import {
-    useCreateCategoryMutation,
-    useUpdateCategoryMutation,
-} from "@/store/categoryApi";
+	useCreateCategoryMutation,
+	useUpdateCategoryMutation,
+} from "@/store/apis/categoryApi";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Inter } from "next/font/google";
 import React from "react";

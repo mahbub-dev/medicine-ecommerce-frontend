@@ -1,6 +1,6 @@
 // pages/products.tsx
 import usePagination from "@/hooks/usePagination";
-import { useGetProductsQuery } from "@/store/productApi";
+import { useGetProductsQuery } from "@/store/apis/productApi";
 import { useEffect } from "react";
 import GlobalPagination from "../common/Pagination";
 import ProductCard from "./productCard";

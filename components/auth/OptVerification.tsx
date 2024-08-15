@@ -1,4 +1,4 @@
-import { useResendOtpMutation, useVerifyOtpMutation } from "@/store/authApi"; // Assuming you have an OTP verification mutation
+import { useResendOtpMutation, useVerifyOtpMutation } from "@/store/apis/authApi"; // Assuming you have an OTP verification mutation
 import { useRouter } from "next/navigation";
 import { SetStateAction, useEffect, useState } from "react";
 import { toast } from "react-toastify";

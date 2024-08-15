@@ -3,7 +3,7 @@ import usePagination from "@/hooks/usePagination";
 import {
 	useDeleteProductMutation,
 	useGetProductsQuery,
-} from "@/store/productApi";
+} from "@/store/apis/productApi";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import { toast } from "react-toastify";

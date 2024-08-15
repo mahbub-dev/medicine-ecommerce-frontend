@@ -28,7 +28,7 @@ const Sidebar = () => {
 			? `${baseClasses} ${activeClasses}`
 			: `${baseClasses} ${inactiveClasses}`;
 	};
-
+	const isSuperAdmin = pathname?.includes("super-admin");
 	return (
 		<div
 			className={`flex h-screen  ${inter.className} ${
@@ -55,38 +55,56 @@ const Sidebar = () => {
 
 					{/* Sidebar Links */}
 					<div className="sidebar-links space-y-1">
-						<div>
-							<Link
-								className={linkClasses("/admin/users")}
-								href="/admin/users">
-								<FaUsers />
-								<span>Users</span>
-							</Link>
-						</div>
-						<div>
-							<Link
-								className={linkClasses("/admin/products")}
-								href="/admin/products">
-								<FaBox />
-								<span>Products</span>
-							</Link>
-						</div>
-						<div>
-							<Link
-								className={linkClasses("/admin/orders")}
-								href="/admin/orders">
-								<FaShoppingCart />
-								<span>Orders</span>
-							</Link>
-						</div>
-						<div>
-							<Link
-								className={linkClasses("/admin/categories")}
-								href="/admin/categories">
-								<FaListAlt />
-								<span>Categories</span>
-							</Link>
-						</div>
+						{isSuperAdmin && (
+							<div>
+								<Link
+									className={linkClasses("/super-admin")}
+									href="/super-admin">
+									<FaUsers />
+									<span>Admins</span>
+								</Link>
+							</div>
+						)}
+						{!isSuperAdmin && (
+							<>
+								<div>
+									<Link
+										className={linkClasses("/admin/users")}
+										href="/admin/users">
+										<FaUsers />
+										<span>Users</span>
+									</Link>
+								</div>
+								<div>
+									<Link
+										className={linkClasses(
+											"/admin/products"
+										)}
+										href="/admin/products">
+										<FaBox />
+										<span>Products</span>
+									</Link>
+								</div>
+								<div>
+									<Link
+										className={linkClasses("/admin/orders")}
+										href="/admin/orders">
+										<FaShoppingCart />
+										<span>Orders</span>
+									</Link>
+								</div>
+								<div>
+									<Link
+										className={linkClasses(
+											"/admin/categories"
+										)}
+										href="/admin/categories">
+										<FaListAlt />
+										<span>Categories</span>
+									</Link>
+								</div>
+							</>
+						)}
 					</div>
 
 					{/* Logout */}

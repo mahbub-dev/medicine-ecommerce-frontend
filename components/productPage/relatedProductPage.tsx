@@ -1,5 +1,5 @@
 import usePagination from "@/hooks/usePagination";
-import { useGetProductByCategoryQuery } from "@/store/productApi";
+import { useGetProductByCategoryQuery } from "@/store/apis/productApi";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import GlobalPagination from "../common/Pagination";

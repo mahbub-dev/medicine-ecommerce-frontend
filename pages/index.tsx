@@ -1,6 +1,6 @@
 import ProductCard from "@/components/productPage/productCard";
 import UserLayout from "@/Layouts/UserLayout";
-import { useGetProductsQuery } from "@/store/productApi";
+import { useGetProductsQuery } from "@/store/apis/productApi";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import Link from "next/link";

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { ICategory } from "@/store/categoryApi";
+import { ICategory } from "@/store/apis/categoryApi";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";

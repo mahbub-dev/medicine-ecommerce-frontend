@@ -1,5 +1,5 @@
 import usePagination from "@/hooks/usePagination";
-import { useGetProductByCategoryQuery } from "@/store/productApi";
+import { useGetProductByCategoryQuery } from "@/store/apis/productApi";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import ProductCard from "./productCard";

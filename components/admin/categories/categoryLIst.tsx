@@ -2,7 +2,7 @@ import GlobalPagination from "@/components/common/Pagination";
 import {
 	ICategory,
 	useDeleteCategoryMutation,
-} from "@/store/categoryApi"; // Adjust the import according to your API slice
+} from "@/store/apis/categoryApi"; // Adjust the import according to your API slice
 import React from "react";
 import { toast } from "react-toastify";
 import { CategoryItem } from "./categoryItem";

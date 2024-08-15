@@ -1,6 +1,6 @@
 import Modal from "@/components/common/GlobalModal";
-import { useGetProductByIdQuery } from "@/store/productApi";
-import { useDeleteVariantMutation } from "@/store/variantApi";
+import { useGetProductByIdQuery } from "@/store/apis/productApi";
+import { useDeleteVariantMutation } from "@/store/apis/variantApi";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa"; // Import the edit and delete icons from Font Awesome

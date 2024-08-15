@@ -1,6 +1,6 @@
 // components/auth/Login.js
-import { useLoginMutation } from "@/store/authApi";
-import { setCredentials } from "@/store/authSlice"; // Import the setCredentials action
+import { useLoginMutation } from "@/store/apis/authApi";
+import { setCredentials } from "@/store/slices/authSlice"; // Import the setCredentials action
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/router";

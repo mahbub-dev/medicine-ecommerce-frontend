@@ -1,4 +1,4 @@
-import { decrementQuantity, incrementQuantity } from '@/store/cartSlice'; // Assuming these actions exist
+import { decrementQuantity, incrementQuantity } from '@/store/slices/cartSlice'; // Assuming these actions exist
 import React from 'react';
 import { useDispatch } from 'react-redux';
 

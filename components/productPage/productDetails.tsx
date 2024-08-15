@@ -1,5 +1,5 @@
-import { addToCart, removeFromCart, selectCartItems } from "@/store/cartSlice"; // Import selectCartItems
-import { useGetProductByIdQuery } from "@/store/productApi";
+import { useGetProductByIdQuery } from "@/store/apis/productApi";
+import { addToCart, removeFromCart, selectCartItems } from "@/store/slices/cartSlice"; // Import selectCartItems
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";

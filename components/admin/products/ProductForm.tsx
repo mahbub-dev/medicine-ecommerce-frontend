@@ -1,7 +1,7 @@
 import {
 	useCreateProductMutation,
 	useUpdateProductMutation,
-} from "@/store/productApi"; // Replace with your product API slice
+} from "@/store/apis/productApi"; // Replace with your product API slice
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";

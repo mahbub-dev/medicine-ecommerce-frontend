@@ -1,5 +1,5 @@
 import { RootState, store } from "@/store";
-import { logout, setAccessToken } from "@/store/authSlice";
+import { logout, setAccessToken } from "@/store/slices/authSlice";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Mutex } from "async-mutex";
 import axios from "axios";

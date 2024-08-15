@@ -1,4 +1,4 @@
-import { useGetOrderByIdQuery } from "@/store/orderApi";
+import { useGetOrderByIdQuery } from "@/store/apis/orderApi";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";

@@ -1,5 +1,5 @@
 // components/auth/Registration.js
-import { useRegisterMutation } from "@/store/authApi"; // Updated import
+import { useRegisterMutation } from "@/store/apis/authApi"; // Updated import
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Link from "next/link";
 import { useState } from "react";
@@ -48,8 +48,9 @@ const Registration = () => {
 			} else {
 				toast.error("Registration failed. Please try again.");
 			}
-		} catch (error) {
-			toast.error("An error occurred during registration.");
+		} catch (error:any) {
+			console.log(error)
+			toast.error(error?.data?.message ||error?.data?.error ||"An error occurred during registration.");
 		} finally {
 			setLoading(false);
 			setSubmitting(false);

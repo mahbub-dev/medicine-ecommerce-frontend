@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { RootState } from "../store"; // Adjust the import path as needed
+import { RootState } from "../index"; // Adjust the import path as needed
 
 interface CartItem {
 	productId: string;

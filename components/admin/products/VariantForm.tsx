@@ -1,7 +1,7 @@
 import {
 	useCreateVariantMutation,
 	useUpdateVariantMutation,
-} from "@/store/variantApi"; // Import the mutation hooks
+} from "@/store/apis/variantApi"; // Import the mutation hooks
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import { toast } from "react-toastify";

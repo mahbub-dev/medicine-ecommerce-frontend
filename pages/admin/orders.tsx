@@ -1,6 +1,6 @@
 import OrderList from "@/components/admin/orders/OrderList";
 import DashboardLayout from "@/Layouts/AdminLayouts";
-import { Order } from "@/store/orderApi";
+import { Order } from "@/store/apis/orderApi";
 import Head from "next/head";
 
 const Orders = () => {

@@ -1,15 +1,9 @@
-import Modal from "@/components/common/GlobalModal";
 import GlobalPagination from "@/components/common/Pagination";
-import RoleUpdater from "@/components/super-admin/roleUpdater";
 import usePagination from "@/hooks/usePagination";
 import { useGetUsersQuery } from "@/store/apis/userApi";
-import { useEffect, useState } from "react";
-import { BiEdit } from "react-icons/bi";
-const UsersList = () => {
+import { useEffect } from "react";
+const ManageAdmins = () => {
 	const { page, router } = usePagination();
-	const [openRoleUpdateView, setOpenRoleUpdateViewe] = useState<any | null>(
-		null
-	);
 	const { data, error, isLoading, refetch } = useGetUsersQuery({
 		page,
 		limit: 10,
@@ -20,12 +14,12 @@ const UsersList = () => {
 	}, [refetch]);
 
 	if (isLoading) return <div className="text-center">Loading...</div>;
+
 	if (error) return <div className="text-center">No Data Found</div>;
 	// if (error) return <div>Error loading users.</div>;
 
 	// Use real data if available; otherwise, fallback to dummy data
 	const users = data?.users.length ? data.users : [];
-	const isSuperAdmin = router?.pathname?.includes("super-admin");
 
 	return (
 		<div className="container mx-auto p-6">
@@ -47,20 +41,8 @@ const UsersList = () => {
 							<tr key={user._id} className="border-b">
 								<td className="py-3 px-6">{user.name}</td>
 								<td className="py-3 px-6">{user.email}</td>
-								<td className="py-3 px-6 capitalize flex gap-2 items-center">
-									<span> {user.role}</span>
-									{isSuperAdmin && (
-										<BiEdit
-											onClick={() =>
-												setOpenRoleUpdateViewe({
-													userId: user._id,
-													currentRole: user.role,
-												})
-											}
-											size={20}
-											className="text-blue-500 cursor-pointer"
-										/>
-									)}
+								<td className="py-3 px-6 capitalize">
+									{user.role}
 								</td>
 								<td className="py-3 px-6">
 									<span
@@ -82,21 +64,8 @@ const UsersList = () => {
 				totalPages={data?.totalPages as number}
 				onPageChange={(newPage) => {}}
 			/>
-			<Modal
-				isOpen={openRoleUpdateView}
-				onClose={function (): void {
-					setOpenRoleUpdateViewe(null);
-				}}>
-				<RoleUpdater
-					currentRole={openRoleUpdateView?.currentRole}
-					userId={openRoleUpdateView?.userId}
-					onRoleUpdate={function () {
-						return setOpenRoleUpdateViewe(null);
-					}}
-				/>
-			</Modal>
 		</div>
 	);
 };
 
-export default UsersList;
+export default ManageAdmins;

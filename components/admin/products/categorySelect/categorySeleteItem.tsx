@@ -1,4 +1,4 @@
-import { ICategory, useGetCategoriesQuery } from "@/store/categoryApi";
+import { ICategory, useGetCategoriesQuery } from "@/store/apis/categoryApi";
 import { ErrorMessage, Field } from "formik";
 import React, { useEffect, useState } from "react";
 

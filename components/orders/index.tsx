@@ -1,6 +1,6 @@
 import usePagination from "@/hooks/usePagination";
 import useOrderFilters from "@/hooks/userFilterHook";
-import { useGetOrdersQuery } from "@/store/orderApi";
+import { useGetOrdersQuery } from "@/store/apis/orderApi";
 import Link from "next/link";
 import { useEffect } from "react";
 import GlobalPagination from "../common/Pagination";

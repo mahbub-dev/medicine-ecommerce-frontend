@@ -1,11 +1,11 @@
-import { clearCart } from "@/store/cartSlice";
-import { useCreateOrderMutation } from "@/store/orderApi";
+import { useCreateOrderMutation } from "@/store/apis/orderApi";
 import {
 	useCreateShippingAddressMutation,
 	useDeleteShippingAddressMutation,
 	useGetShippingAddressesQuery,
 	useUpdateShippingAddressMutation,
-} from "@/store/shippingApi";
+} from "@/store/apis/shippingApi";
+import { clearCart } from "@/store/slices/cartSlice";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";

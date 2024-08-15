@@ -2,15 +2,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-import { authApi } from "./authApi";
-import authReducer from "./authSlice"; // Import the authSlice
-import cartReducer from "./cartSlice";
-import { categoryApi } from "./categoryApi";
-import { orderApi } from "./orderApi";
-import { productApi } from "./productApi";
-import { shippingApi } from "./shippingApi";
-import { userApi } from "./userApi";
-import { variantApi } from "./variantApi";
+import { authApi } from "./apis/authApi";
+import { categoryApi } from "./apis/categoryApi";
+import { orderApi } from "./apis/orderApi";
+import { productApi } from "./apis/productApi";
+import { shippingApi } from "./apis/shippingApi";
+import { userApi } from "./apis/userApi";
+import { variantApi } from "./apis/variantApi";
+import authReducer from "./slices/authSlice"; // Import the authSlice
+import cartReducer from "./slices/cartSlice";
 
 const rootReducer = combineReducers({
 	auth: authReducer, // Add the authSlice here

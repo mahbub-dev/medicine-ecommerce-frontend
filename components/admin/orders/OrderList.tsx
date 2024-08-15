@@ -3,7 +3,7 @@ import Filter from "@/components/common/orderFilterComponent";
 import GlobalPagination from "@/components/common/Pagination"; // Import the pagination component
 import usePagination from "@/hooks/usePagination";
 import useOrderFilters from "@/hooks/userFilterHook";
-import { Order, useGetOrdersQuery } from "@/store/orderApi";
+import { Order, useGetOrdersQuery } from "@/store/apis/orderApi";
 import React, { useEffect, useState } from "react";
 import { GrEdit, GrFormView } from "react-icons/gr";
 import OrderedProductView from "./OrderedProductsVieiw";

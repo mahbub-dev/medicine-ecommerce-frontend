@@ -1,6 +1,6 @@
 // store/hooks/useLogout.ts
-import { useLogoutMutation } from "@/store/authApi";
-import { logout } from "@/store/authSlice";
+import { useLogoutMutation } from "@/store/apis/authApi";
+import { logout } from "@/store/slices/authSlice";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
