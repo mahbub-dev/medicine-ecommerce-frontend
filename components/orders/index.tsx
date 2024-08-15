@@ -14,7 +14,8 @@ const OrdersPage = () => {
 		limit: 10,
 		startDate ,
 		status,
-		endDate
+		endDate,
+		getBy:'getbyuser'
 	});
 	useEffect(() => {
 		refetch();

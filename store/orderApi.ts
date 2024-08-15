@@ -2,10 +2,10 @@ import { IProduct, Variant } from "@/components/admin/products/types";
 import baseQueryWithReauth from "@/utils/apiRequest";
 import { createApi } from "@reduxjs/toolkit/query/react";
 export interface Order {
-	createdAt?: string | number | Date;
+	createdAt?: any;
 	products?: any;
 	_id?: string;
-	user: string;
+	user: any;
 	status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
 	items: {
 		product: IProduct[];
@@ -37,13 +37,14 @@ export const orderApi = createApi({
 			{
 				page: number;
 				limit: number;
+				getBy: "getbyuser" | "getbyadmin";
 				startDate?: string;
 				endDate?: string;
 				status?: string;
 			}
 		>({
-			query: ({ page, limit, status, startDate, endDate }) => ({
-				url: "/orders/getbyuser",
+			query: ({ page, limit, status, startDate, endDate, getBy }) => ({
+				url: `/orders/${getBy}`,
 				params: { page, limit, status, startDate, endDate },
 			}),
 			providesTags: (result) =>
@@ -80,6 +81,16 @@ export const orderApi = createApi({
 				{ type: "Order", id: _id },
 			],
 		}),
+		updateOrderStatus: builder.mutation<any, Partial<any>>({
+			query: ({ _id, status }) => ({
+				url: `/orders/update-order-status/${_id}`,
+				method: "PUT",
+				body: { status },
+			}),
+			invalidatesTags: (result, error, { _id }) => [
+				{ type: "Order", id: _id },
+			],
+		}),
 		deleteOrder: builder.mutation<{ success: boolean }, string>({
 			query: (id) => ({
 				url: `/orders/${id}`,
@@ -96,4 +107,5 @@ export const {
 	useCreateOrderMutation,
 	useUpdateOrderMutation,
 	useDeleteOrderMutation,
+	useUpdateOrderStatusMutation
 } = orderApi;

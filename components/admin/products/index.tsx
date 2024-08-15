@@ -30,8 +30,8 @@ const ProductManager: React.FC = () => {
 	};
 
 	return (
-		<div className={`container mx-auto p-4 ${inter.className}`}>
-			<h1 className="text-4xl font-bold mb-8">Product Management</h1>
+		<div className={`mx-auto  ${inter.className}`}>
+			{/* <h1 className="text-4xl font-bold mb-8">Product Management</h1> */}
 			{/* Button to toggle Add Product Form */}
 			<button
 				className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"

@@ -42,7 +42,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
 	useEffect(() => {
 		refetch();
 	}, [refetch]);
-	if (isLoading) return <div>Loading...</div>;
+	if (isLoading) return <div className="flex items-center min-h-screen justify-center">Loading...</div>;
 	if (error || !product) return <div>404 not found</div>;
 	const handleEditVariant = (variant: any) => {
 		setViewVariantEdit(true);

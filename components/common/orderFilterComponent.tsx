@@ -32,9 +32,9 @@ const Filter = () => {
 	};
 
 	return (
-		<div className="p-4 bg-white rounded-lg shadow-md mb-5 ">
+		<div className="p-4 bg-white rounded-lg   shadow-md mb-5 ">
 			<h3 className="text-lg font-semibold mb-4">Filter Orders</h3>
-			<div className="space-y-4 flex flex-col gap-4 items-center justify-center flex-wrap">
+			<div className=" flex  gap-4 items-center justify-center flex-wrap">
 				<div className="flex items-center space-x-2">
 					<label htmlFor="startDate" className="w-24 text-gray-700">
 						Start Date:

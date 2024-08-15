@@ -39,11 +39,11 @@ const ProductDetailsPage = ({ productId }: { productId: string }) => {
 	}, [cartItems, product, selectedVariant]);
 
 	if (isLoading) {
-		return <p className="flex items-center min-screen justify-center">Loading...</p>;
+		return <p className="flex items-center min-h-screen justify-center">Loading...</p>;
 	}
 
 	if (!product) {
-		return <p className="flex items-center min-screen justify-center">Product not found.</p>;
+		return <p className="flex items-center min-h-screen justify-center">Product not found.</p>;
 	}
 
 	const handleVariantChange = (variantId: string) => {

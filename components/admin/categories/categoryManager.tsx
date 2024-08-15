@@ -22,8 +22,8 @@ const CategoryManager: React.FC = () => {
 	useEffect(() => {
 		refetch();
 	}, [refetch]);
-	if (isLoading) return <div>Loading...</div>;
-	if (error) return <div>Error loading categories.</div>;
+	if (isLoading) return <div className="flex items-center min-h-screen justify-center">Loading...</div>;
+	if (error) return <div className="flex items-center min-h-screen justify-center">No Categories Found.</div>;
 	const renderCategoryManager = () => (
 		<>
 			<CategoryForm
@@ -41,7 +41,7 @@ const CategoryManager: React.FC = () => {
 	);
 
 	return (
-		<div className="container mx-auto p-6 w-full">
+		<div className=" mx-auto  w-full">
 			{/* Render Category Manager Based on Active Category */}
 			{renderCategoryManager()}
 		</div>
