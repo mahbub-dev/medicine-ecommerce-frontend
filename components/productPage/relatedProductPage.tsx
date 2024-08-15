@@ -32,14 +32,24 @@ const ProductsByCategory: React.FC<ProductsByCategoryProps> = () => {
 		}
 	}, [categories, refetch]);
 
-	if (isLoading) return <p>Loading...</p>;
-	if (error || data?.products.length === 0) return <p>No Data Found</p>;
+	if (isLoading)
+		return (
+			<p className="min-h-[60vh] flex items-center justify-center">
+				Loading...
+			</p>
+		);
+	if (error || data?.products.length === 0)
+		return (
+			<p className="min-h-[60vh] flex items-center justify-center">
+				No Data Found
+			</p>
+		);
 
 	return (
-		<div className="container mx-14">
-			<h1 className="text-4xl font-bold mb-5">Related Products</h1>
+		<div className="">
+			<h1 className="text-3xl font-bold mb-5">Related Products</h1>
 			<div className="mb-5">Categories : {categoriesQuery}</div>
-			<div className="grid grid-cols-4 gap-4 grid-wrap">
+			<div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-4 ">
 				{data?.products.map((product: any) => (
 					<ProductCard product={product} key={product._id} />
 				))}

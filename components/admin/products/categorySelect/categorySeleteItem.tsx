@@ -7,7 +7,6 @@ interface CategorySelectProps {
 	label: string;
 	selectedCategory?: string;
 	onCategoryChange: (categoryId: string) => void;
-
 }
 
 const CategorySelect: React.FC<CategorySelectProps> = ({
@@ -29,7 +28,7 @@ const CategorySelect: React.FC<CategorySelectProps> = ({
 			setCategories(data.categories);
 		}
 	}, [data]);
-    if (error) return <></>;
+	if (error) return <></>;
 	return (
 		<div className="mb-4">
 			<label className="block text-gray-700">{label}</label>
@@ -43,14 +42,16 @@ const CategorySelect: React.FC<CategorySelectProps> = ({
 				className="w-full px-4 py-2 border rounded-md focus:outline-none">
 				<option value="">Select Category</option>
 
-				{categories.filter((i:any)=>i.level === 'primary').map((category) => (
-					<option key={category._id} value={category._id}>
-						{category.name}
-					</option>
-				))}
+				{categories
+					.filter((i: any) => i.level === "primary")
+					.map((category) => (
+						<option key={category._id} value={category._id}>
+							{category.name}
+						</option>
+					))}
 			</Field>
 			<ErrorMessage
-				name={name}
+				name="categories"
 				component="div"
 				className="text-red-500"
 			/>

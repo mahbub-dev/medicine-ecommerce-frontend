@@ -1,6 +1,5 @@
 // store/authSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
 interface AuthState {
 	token: string | null;
 	refreshToken: string | null;
@@ -44,7 +43,7 @@ const authSlice = createSlice({
 			state.token = null;
 			state.refreshToken = null;
 			state.user = null;
-			localStorage.clear()
+			// store.dispatch(clearCart())
 		},
 	},
 });

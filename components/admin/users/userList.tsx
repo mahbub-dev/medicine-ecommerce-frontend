@@ -29,7 +29,7 @@ const UsersList = () => {
 	const isSuperAdmin = router?.pathname?.includes("super-admin");
 
 	return (
-		<div className="container mx-auto p-6">
+		<div className=" mx-auto mt-5">
 			{/* <h2 className="text-3xl font-bold mb-6 text-gray-800">User List</h2> */}
 			<div className="overflow-x-auto shadow-md rounded-lg">
 				<table className="min-w-full bg-white">

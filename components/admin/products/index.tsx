@@ -58,6 +58,7 @@ const ProductManager: React.FC = () => {
 			</Modal>
 
 			<Modal
+				className="w-[300px]"
 				isOpen={showVariantForm}
 				onClose={() => setShowVariantForm(false)}>
 				<VariantForm

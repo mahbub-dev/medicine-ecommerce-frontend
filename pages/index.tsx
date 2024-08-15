@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 const RenderProducts = () => {
 	const { data, error, isLoading, refetch } = useGetProductsQuery({
 		page: 1,
-		limit: 6,
+		limit: 4,
 	});
 	useEffect(() => {
 		refetch();
@@ -26,13 +26,13 @@ const RenderProducts = () => {
 					No Data Found
 				</div>
 			)}
-			<div className="flex flex-wrap gap-4">
+			<div className="flex flex-wrap gap-4 mb-5">
 				{data?.products.length !== 0 &&
 					data?.products.map((product: any) => (
 						<ProductCard product={product} key={product._id} />
 					))}
 			</div>
-			{(data?.products.length as number) > 6 && (
+			{(data?.products.length as number) >= 4 && (
 				<Link
 					href={`/products`}
 					className="px-3 mx-auto block w-[200px] text-white py-2 rounded bg-gray-500 text-center">

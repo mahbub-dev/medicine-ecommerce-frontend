@@ -93,7 +93,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
 				toast.success("Product added successfully");
 			}
 
-			resetForm();
+			// resetForm();
 		} catch (error: any) {
 			console.log(error);
 			toast.error(error.data?.message || "Something went wrong");
@@ -256,19 +256,32 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit }) => {
 										setFieldValue={function (
 											categories: any
 										): void {
-											Object.values(categories);
+											let categoriess: string[] = [];
+											for (const key in categories) {
+												if (
+													Object.prototype.hasOwnProperty.call(
+														categories,
+														key
+													)
+												) {
+													const element =
+														categories[key];
+													if (element !== "") {
+														categoriess.push(
+															element
+														);
+													}
+												}
+											}
+
 											setFieldValue(
 												"categories",
-												Object.values(categories)
+												categoriess
 											);
 										}}
 									/>
 								)}
-								<ErrorMessage
-									name="category"
-									component="div"
-									className="text-red-500"
-								/>
+
 								{/* <div className="mb-4">
 								<label className="block text-gray-700">
 									Variants

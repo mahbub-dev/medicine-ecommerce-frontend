@@ -47,9 +47,11 @@ const Sidebar = () => {
 							height={50}
 						/>
 						{isSidebarOpen && (
-							<span className="text-xl font-semibold ml-3">
-								Medicine Store
-							</span>
+							<Link
+								href={"/"}
+								className="text-xl font-semibold ml-3">
+								MediStore
+							</Link>
 						)}
 					</div>
 

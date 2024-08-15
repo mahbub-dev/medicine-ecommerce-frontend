@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 const inter = Inter({ subsets: ["latin"] });
 const UserLayout = ({ children, isCheckAuth = true }: any) => {
 	const router = useRouter();
-	const user = useSelector((state: any) => state.auth.user);
+	const user = useSelector((state: any) => state.auth?.user);
 	useEffect(() => {
 		if (isCheckAuth) {
 			if (user?.role !== "user") {
@@ -25,7 +25,7 @@ const UserLayout = ({ children, isCheckAuth = true }: any) => {
 		<>
 			{/* <Navbar /> */}
 			<Navbar />
-			<div className="  bg-gray-100  ">
+			<div className="bg-gray-100  ">
 				<div
 					className={` w-full ${inter.className}`}
 					// style={{ overflow: "hidden" }}

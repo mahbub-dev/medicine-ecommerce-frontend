@@ -19,10 +19,11 @@ const RelatedProduct: React.FC<ProductsByCategoryProps> = ({
 	categories,
 	productId,
 }) => {
+
 	const { page } = usePagination();
 	const { data, isLoading, error, refetch } = useGetProductByCategoryQuery({
 		page,
-		limit: 10,
+		limit: 5,
 		categories: categories,
 	});
 
@@ -48,7 +49,7 @@ const RelatedProduct: React.FC<ProductsByCategoryProps> = ({
 								/>
 							))}
 			</div>
-			{(data?.products?.length as number) > 6 && (
+			{(data?.products?.length as number) >=5 && (
 				<Link
 					href={`/related-products?categories=${categories}`}
 					className="px-3 mx-auto block w-[200px] mt-5 text-white py-2 rounded bg-gray-500 text-center">

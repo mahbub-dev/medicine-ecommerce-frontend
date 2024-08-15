@@ -40,13 +40,26 @@ const Navbar = () => {
 						className={getLinkClassName("/products")}>
 						Products
 					</Link>
-					{isLoggedIn && (
-						<Link
-							href="/orders"
-							className={getLinkClassName("/orders")}>
-							My Orders
-						</Link>
-					)}
+					{isLoggedIn &&
+						(user.role === "user" ? (
+							<Link
+								href="/orders"
+								className={getLinkClassName("/orders")}>
+								My Orders
+							</Link>
+						) : user.role === "admin" ? (
+							<Link
+								href="/admin/users"
+								className={getLinkClassName("/orders")}>
+								Admin Dashboard
+							</Link>
+						) : (
+							<Link
+								href="/super-admin"
+								className={getLinkClassName("/super-admin")}>
+								Super Admin Dashboard
+							</Link>
+						))}
 
 					{isLoggedIn ? (
 						<button onClick={handleLogout} className="text-white">
@@ -64,7 +77,7 @@ const Navbar = () => {
 					{isLoggedIn && (
 						<div className="flex items-center gap-2">
 							<Image
-							title={'user photo'}
+								title={"user photo"}
 								src={user?.photo}
 								alt="User Photo"
 								width={50}

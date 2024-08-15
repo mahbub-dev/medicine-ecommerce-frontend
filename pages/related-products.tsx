@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Index({ params }: any) {
 	return (
-		<UserLayout>
+		<UserLayout isCheckAuth={false}>
 			<Head>
 				<title> My Medicine Store</title>
 				<meta
@@ -20,8 +20,8 @@ export default function Index({ params }: any) {
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<main className={`container p-4 ${inter.className}`}>
-				<ProductsByCategory  />
+			<main className={`mx-auto container`}>
+				<ProductsByCategory />
 			</main>
 		</UserLayout>
 	);

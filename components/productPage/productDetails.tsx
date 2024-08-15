@@ -30,6 +30,9 @@ const ProductDetailsPage = ({
 	const cartItems = useSelector(selectCartItems); // Selector to get cart items from the Redux store
 	const [veiwCart, setViewCart] = useState(false);
 
+	useEffect(()=>{
+		setSelectedVariant(product?.variants[0]?._id)
+	},[product?.variants])
 	useEffect(() => {
 		if (product) {
 			// Check if the product is already in the cart
